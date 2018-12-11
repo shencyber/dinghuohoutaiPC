@@ -52,6 +52,9 @@ const store = new Vuex.Store ({
 
 
 
+		// 商品相关
+		uploadGoodsImageApi( state ){ return state.baseurl + 'index/photo/upload' },
+
 		//重置密码
 		// resetPasswordApi( state ){ return state.baseurl + 'resetPassword' },
 

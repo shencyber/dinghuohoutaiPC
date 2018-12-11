@@ -16,10 +16,12 @@ var router =  new Router({
     {
       path: '/',
       name: 'login',
+      component:  resolve => require(['../pages/goods/goodslist.vue'], resolve)//懒加载
       // component:  resolve => require(['../pages/me/me.vue'], resolve)//懒加载
       // component:  resolve => require(['../pages/order/orderlist.vue'], resolve)//懒加载
       // component:  resolve => require(['../pages/order/orderdetail.vue'], resolve)//懒加载
-      component:  resolve => require(['../pages/login.vue'], resolve)//懒加载
+      // component:  resolve => require(['../pages/order/orderdetail.vue'], resolve)//懒加载
+      // component:  resolve => require(['../pages/login.vue'], resolve)//懒加载
       //component: login
       ,meta:[ "ALL"]
     },

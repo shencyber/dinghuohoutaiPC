@@ -115,7 +115,6 @@ export default{
 					// this.setLoginInfo( res.data.result );
 					this.$log( "user info" , res.data.result );
 
-                    if(res.data.status == 0){
 
                     //请求左侧导航
                     // try{
@@ -132,7 +131,7 @@ export default{
                    				content:'登录成功'
                   				 })
                     // }
-                    }
+                    
 
 				}
 
