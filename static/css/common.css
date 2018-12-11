@@ -1,0 +1,13 @@
+.left{float:left;}.right{float:right;}
+body{font-family:"微软雅黑";}
+.container{
+	width:1200px;
+	margin:0 auto;
+
+	
+}
+.clear{clear:both;}
+
+.arrow{padding:0 4px;}
+.arrow-up{color:#f00;}
+.arrow-down{color:#37d92b;}
