@@ -53,8 +53,18 @@ const store = new Vuex.Store ({
 
 
 		// 商品相关
+		// 上传图片
 		uploadGoodsImageApi( state ){ return state.baseurl + 'index/photo/upload' },
 
+		//发布商品
+		publicGoodsApi( state ){return state.baseurl + 'index/goods/addLocal'},
+
+		//根据商品id获取商品信息
+		
+		getGoodsByIdApi(state){return state.baseurl + 'index/goods/getGoodsById'},
+
+		//根据供货商id获取商品列表
+		getGoodsListByGhsIdApi(state){return state.baseurl + 'index/goods/getGoodsListByGhsId'},
 		//重置密码
 		// resetPasswordApi( state ){ return state.baseurl + 'resetPassword' },
 
@@ -145,7 +155,7 @@ const store = new Vuex.Store ({
 		setLoginInfo(state , object){
 			let expires = { expires : 3 } ;//3天
 
-			VueCookie.set('uid',object.id , expires);      //  用户id
+			VueCookie.set('uid',object.userid , expires);      //  用户id
 			VueCookie.set('name',object.name , expires);  // 员工姓名
 			VueCookie.set( 'phone' , object.phone  , expires );  // 职位  code
 			VueCookie.set( 'gno' , object.gno  , expires );  // 职位  code
@@ -153,7 +163,7 @@ const store = new Vuex.Store ({
 			state.isLogin = true ;
 
 
-			state.userInfo.userName = object.staff_name ;
+			state.userInfo.userName = object.name ;
 
 			// console.log( "denglu" , state.isLogin )  ;
 

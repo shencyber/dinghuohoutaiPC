@@ -102,17 +102,13 @@ export default{
 			.then( res=>{
 
 
-				if( 0  !== res.data.status )
+				
+				if( 0 == res.data.status )
 				{
 
-					this.$Modal.info({ content:"登录错误，请重新登录" , duration:5});
-				}
-				else
-				{
-
-					this.$log( "用户信息" , res );
+					console.log( "用户信息" , res );
 					
-					// this.setLoginInfo( res.data.result );
+					this.setLoginInfo( res.data.result );
 					this.$log( "user info" , res.data.result );
 
 
@@ -133,6 +129,11 @@ export default{
                     // }
                     
 
+				}
+				else
+				{
+
+					this.$Modal.info({ content:"登录错误，请重新登录" , duration:5});
 				}
 
 			})

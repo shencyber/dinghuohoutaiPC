@@ -16,8 +16,9 @@ var router =  new Router({
     {
       path: '/',
       name: 'login',
-      // component:  resolve => require(['../pages/login.vue'], resolve)//懒加载
-      component:  resolve => require(['../pages/goods/goodslist.vue'], resolve)//懒加载
+      component:  resolve => require(['../pages/login.vue'], resolve)//懒加载
+      // component:  resolve => require(['../pages/goods/goodslist.vue'], resolve)//懒加载
+      // component:  resolve => require(['../pages/goods/addgoods.vue'], resolve)//懒加载
       // component:  resolve => require(['../pages/me/me.vue'], resolve)//懒加载
       // component:  resolve => require(['../pages/order/orderlist.vue'], resolve)//懒加载
       // component:  resolve => require(['../pages/order/orderdetail.vue'], resolve)//懒加载
@@ -45,7 +46,7 @@ var router =  new Router({
 
     {
       path: '/gl',
-      name: 'orderdetail',
+      name: 'goodslist',
       component:  resolve => require(['../pages/goods/goodslist.vue'], resolve)//懒加载
       //component: login
       ,meta:[ "ALL"]
@@ -127,7 +128,7 @@ router.beforeEach((to , from , next)=>{
     // console.log("从哪来" , from);
     // console.log("到哪去" , to);
 
-    next();
+    next();return ;
     var role = VueCookie.get("role_admin")  ;
 
     //如果用户未登录
