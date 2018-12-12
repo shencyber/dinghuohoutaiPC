@@ -1,6 +1,10 @@
 <template>
 <div>
 	
+		
+
+
+
 	<div class="single-page-con">
 
 		<Button type="primary">+添加商品</Button>
@@ -14,10 +18,14 @@
 	            <Input v-model="desc" placeholder="Enter something..."></Input>
 	        </FormItem>
 
-	        <div class="demo-upload-list" v-for="item in uploadList">
+	        
+	        <FormItem>
+	        	<div style="display: inline-block;" class="demo-upload-list"  v-for="item in uploadList">
 		        <!-- <template v-if="item.status === 'finished'"> -->
 		            <img :src="item">
 		            <div class="demo-upload-list-cover">
+		                <Icon type="ios-eye-outline" ></Icon>
+		                <Icon type="ios-trash-outline" ></Icon>
 		                <!-- <Icon type="ios-eye-outline" @click.native="handleView(item.name)"></Icon> -->
 		                <!-- <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon> -->
 		            </div>
@@ -25,20 +33,30 @@
 		        <!-- <template v-else> -->
 		            <!-- <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress> -->
 		        <!-- </template> -->
-		        {{uploadGoodsImageApi}}
-		    </div>
-	        <Upload
-		        ref="upload"
-		        :action=uploadGoodsImageApi
-		        style="display: inline-block;width:58px;border:1px solid black;text-align: center;">
-		        <div style="width: 58px;height:58px;line-height: 58px;">
-		            <Icon type="ios-camera" size="20"></Icon>
-		        </div>
-		    </Upload>
+		        
+				</div>
+		        <Upload
+			        ref="upload"
+			        name="image"
+			        :action=uploadGoodsImageApi
+			        multiple
+			        :on-error="handleError"
+			        style="position:relative;top:-22px;border:1px solid blue;display: inline-block;width:60px;height:60px;text-align: center;">
+			        <div style="width: 60px;height:60px;line-height: 60px;">
+			            <Icon type="ios-camera" size="20"></Icon>
+			        </div>
+			    </Upload>
+	        </FormItem>
 
 		</Form>
 
+		
+
+
 	</div>
+
+
+
 
 </div>
 </template>
@@ -54,6 +72,7 @@
 
 
 				uploadList:['http://e.hiphotos.baidu.com/image/pic/item/b151f8198618367afe76969623738bd4b21ce5fa.jpg'],
+				// uploadList:[],
 			}
 		},
 	
@@ -62,8 +81,16 @@
 		 	...mapGetters(['uploadGoodsImageApi'])
 	    }
 
-		,created:{
+		,created(){
 
+		}
+
+		,methods:{
+			handleError(e , file , filelist)
+			{
+				console.log( e );
+				console.log( file );
+			}
 		}
 	}
 </script>
@@ -76,13 +103,14 @@
         width: 60px;
         height: 60px;
         text-align: center;
-        line-height: 60px;
+        /*line-height: 60px;*/
         border: 1px solid transparent;
         border-radius: 4px;
         overflow: hidden;
         background: #fff;
         position: relative;
-        box-shadow: 0 1px 1px rgba(0,0,0,.2);
+        /*top:20px;*/
+        /*box-shadow: 0 1px 1px rgba(0,0,0,.2);*/
         margin-right: 4px;
     }
     .demo-upload-list img{
