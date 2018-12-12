@@ -126,6 +126,7 @@ export default{
                   		 this.$Message.info({
                    				content:'登录成功'
                   				 })
+                  		 this.$router.push({name:'goodslist'});
                     // }
                     
 
@@ -139,6 +140,7 @@ export default{
 			})
 			.catch( err=>{
 
+				console.log("login",err);
 				this.$Modal.info({ content:"登录异常" });
 
 			} )

@@ -60,11 +60,16 @@ const store = new Vuex.Store ({
 		publicGoodsApi( state ){return state.baseurl + 'index/goods/addLocal'},
 
 		//根据商品id获取商品信息
-		
 		getGoodsByIdApi(state){return state.baseurl + 'index/goods/getGoodsById'},
 
 		//根据供货商id获取商品列表
 		getGoodsListByGhsIdApi(state){return state.baseurl + 'index/goods/getGoodsListByGhsId'},
+
+		// 商品下架
+		goodsXiaJiaApi(state){return state.baseurl + 'index/goods/xiajia'},
+
+		// 商品上架
+		goodsShangJiaApi(state){return state.baseurl + 'index/goods/shangjia'},
 		//重置密码
 		// resetPasswordApi( state ){ return state.baseurl + 'resetPassword' },
 

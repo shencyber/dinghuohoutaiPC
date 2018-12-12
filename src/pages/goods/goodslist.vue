@@ -40,7 +40,7 @@
                     <td>{{item.soldamount}}</td>
                     <td>{{item.uptime}}</td>
                     <td>
-                    	<router-link :to="{ path: '/gd',query: { id: item.id } }" targe="_blank" class="btn" >详情
+                    	<router-link :to="{ path: '/gd',query: { id: item.id } }" target="_blank" class="btn" >详情
                         </router-link>
                     </td>
                 </tr>
