@@ -28,6 +28,7 @@
         <Row>
             <Col span=2>商品名称</Col>
             <Col span=18>{{detail.name}}</Col>
+
         </Row>
 
         <Row>
@@ -42,18 +43,33 @@
 
         <Row>
             <Col span=2>商品图片</Col>
-            <Col span=4 v-for="item in detail.urls">
+            <!-- <Col span=4 v-for="item in detail.urls">
                 <img style="width:200px;height:200px;" :src="item">
-            </Col>
+            </Col> -->
+            <Col span=22 style="width:1020px;   ">
+                <ul style="width: 100%;border:1px solid red;list-style:none;">
+                <li v-for="(item,index) in detail.longUrls" style="position: relative;margin:1px;float:left;width:180px;height: 180px;-webkit-box-sizing: border-box;box-sizing: border-box;">
+                    <img style="width:180px;height:180px;" :src="item">
+                    <div class="cover">
+                        <Icon type="ios-eye-outline"   size="40" color="#fff" @click.native="handleView(item)"></Icon>
+                    </div>
+                </li>
+                </ul>
+             </Col>   
         </Row>
 
         <Row>
             <Col v-if="1 == detail.status" span=4><Button type="primary" @click="xiajia(detail.id)">下架</Button></Col>
             <Col v-if="2 == detail.status" span=4><Button type="primary" @click="shangjia(detail.id)">上架</Button></Col>
-            <Col span=4><Button type="primary">修改</Button></Col>
+            <Col span=4><Button type="primary" @click="goToUpdate()">修改</Button></Col>
         </Row>
         
     </div>
+
+    <Modal title="View Image" v-model="visible">
+        <img :src="yulan" style="width: 100%;">
+    </Modal>
+
     <!-- <foot></foot> -->
 </div>
 </template>
@@ -75,7 +91,10 @@
                         desc:'',
                         unitprice:0,
                         urls:''
-                    }
+                    },
+
+                    visible:false,
+                    yulan:'',
                 }
             },
             computed:{
@@ -98,9 +117,22 @@
                     if( 2 == parseInt(this.detail.status) ) return this.detail.downtime ;
                 }
             },
+
+            created(){
+                	this.goodsid = this.$route.query.id;
+                	this.getGoods();
+            	},
+
+
             methods:{
                 // ...mapActions(['getGoodsListByGhsIdApi']),
               	
+              	
+
+            	goToUpdate(){
+            		this.$router.push( { name:'goodsupdate' , query:{id:this.$route.query.id} });
+            	},
+
 
                 //获取商品数据
                 getGoods(){
@@ -184,6 +216,15 @@
                     });
                 }
 
+
+                ,handleView(item)
+                {
+                    // console.log( item )
+                    this.yulan = item;
+                    this.visible = true ;
+                    
+                }
+
                 // 初始化数据
                 ,init()
                 {
@@ -198,13 +239,21 @@
                 }
                
             },
-            created(){
-                this.goodsid = this.$route.query.id;
-                this.getGoods();
-            },
+            
         }
     </script>
-    <style scoped>
-   
+<style scoped>
 
-    </style>
+
+
+.cover{
+    width:100%;
+    position: absolute;
+    top:0;
+    line-height: 200px;
+    text-align: center;
+}
+
+
+
+</style>

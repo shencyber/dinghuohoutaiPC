@@ -53,17 +53,22 @@ const store = new Vuex.Store ({
 
 
 		// 商品相关
+		//根据供货商id获取商品列表
+		getGoodsListByGhsIdApi(state){return state.baseurl + 'index/goods/getgoodslistbyghsid'},
+		// getGoodsListByGhsIdApi(state){return state.baseurl + 'index/goods/getGoodsListByGhsId'},
+		
 		// 上传图片
 		uploadGoodsImageApi( state ){ return state.baseurl + 'index/photo/upload' },
 
 		//发布商品
 		publicGoodsApi( state ){return state.baseurl + 'index/goods/addLocal'},
 
+		//发布商品
+		updateGoodsApi( state ){return state.baseurl + 'index/goods/updateGoods'},
+
 		//根据商品id获取商品信息
 		getGoodsByIdApi(state){return state.baseurl + 'index/goods/getGoodsById'},
 
-		//根据供货商id获取商品列表
-		getGoodsListByGhsIdApi(state){return state.baseurl + 'index/goods/getGoodsListByGhsId'},
 
 		// 商品下架
 		goodsXiaJiaApi(state){return state.baseurl + 'index/goods/xiajia'},

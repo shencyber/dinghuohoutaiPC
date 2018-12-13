@@ -29,8 +29,8 @@
 		        <!-- <template v-if="item.status === 'finished'"> -->
 		            <img :src="item.longUrl">
 		            <div class="demo-upload-list-cover">
-		                <Icon type="ios-eye-outline" ></Icon>
-		                <Icon type="ios-trash-outline" ></Icon>
+		                <!-- <Icon type="ios-eye-outline" ></Icon>
+		                <Icon type="ios-trash-outline" ></Icon> -->
 		                <Icon type="ios-eye-outline" @click.native="handleView(item)"></Icon>
 		                <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
 		            </div>

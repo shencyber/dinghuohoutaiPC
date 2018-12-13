@@ -56,6 +56,7 @@
 </div>
 </template>
     <script>
+        import qs from 'qs'
         // import navbar from '@/components/navbar'
         // import secondnavbar from '@/components/secondnavbar'
         // import foot from '@/components/foot'
@@ -109,7 +110,8 @@
 
                     this.$axios.post(
                         this.getGoodsListByGhsIdApi,
-                        postData           
+                        postData  ,
+                           
                     )
                     .then(res=>
                     	{

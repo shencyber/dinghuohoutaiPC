@@ -70,7 +70,7 @@ var router =  new Router({
 
       {
       path: '/update',
-      name: 'update',
+      name: 'goodsupdate',
       component:  resolve => require(['../pages/goods/goodsupdate.vue'], resolve)//懒加载
       //component: login
       ,meta:[ "ALL"]
