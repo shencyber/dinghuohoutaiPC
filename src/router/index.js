@@ -16,9 +16,9 @@ var router =  new Router({
     {
       path: '/',
       name: 'login',
-      component:  resolve => require(['../pages/login.vue'], resolve)//懒加载
+      // component:  resolve => require(['../pages/login.vue'], resolve)//懒加载
       // component:  resolve => require(['../pages/goods/goodslist.vue'], resolve)//懒加载
-      // component:  resolve => require(['../pages/goods/addgoods.vue'], resolve)//懒加载
+      component:  resolve => require(['../pages/goods/addgoods.vue'], resolve)//懒加载
       // component:  resolve => require(['../pages/me/me.vue'], resolve)//懒加载
       // component:  resolve => require(['../pages/order/orderlist.vue'], resolve)//懒加载
       // component:  resolve => require(['../pages/order/orderdetail.vue'], resolve)//懒加载
@@ -76,6 +76,31 @@ var router =  new Router({
       ,meta:[ "ALL"]
     },
 
+
+
+    {
+      path: '/addgoods',
+      name: 'addgoods',
+      component:  resolve => require(['../pages/goods/addgoods.vue'], resolve)//懒加载
+      //component: login
+      ,meta:[ "ALL"]
+    },
+
+    {
+      path: '/addalbum',
+      name: 'addAlbum',
+      component:  resolve => require(['../pages/goods/addalbum.vue'], resolve)//懒加载
+      //component: login
+      ,meta:[ "ALL"]
+    },
+
+    {
+      path: '/bridging',
+      name: 'bridging',
+      component:  resolve => require(['../pages/guodu/bridging.vue'], resolve)//懒加载
+      //component: login
+      ,meta:[ "ALL"]
+    },
 
     {
       path: '/me',

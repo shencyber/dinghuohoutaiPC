@@ -1,0 +1,76 @@
+<!-- 过渡页面用于获取用户的又拍信息 -->
+
+		<!--author : date   : -->
+<template>
+<div>
+	过渡页面 
+</div>
+</template>
+
+<script>
+
+// import { mapState , mapGetters , mapMutations , mapActions   } from 'vuex'
+
+export default{
+	data(){
+		return {
+			token:'',  //又拍
+			openId:''  //又拍
+		}
+	},
+
+	computed:{
+		...mapGetters(['authorizeYP'])
+	},
+
+	created(){
+		console.log( this.$route.query );
+		this.token = this.$route.query.token;
+		this.openId = this.$route.query.openId;
+
+		// 进行授权，获取userid和token
+		this.$axios.post(
+			this.authorizeYP,
+			{ token : this.token , openid : this.openId , userid : this.$cookie.get('uid') }
+		)
+		.then(res=>{
+			
+			if( 0 ==res.data.status )
+			{
+				this.Notice.success({desc:"授权成功"});
+				this.$router.push({name:'addalbum'});
+			}
+			else
+			{
+				this.Notice.error({desc:"授权失败"});
+			}
+		
+		})
+		.catch(err=>{
+			this.Notice.error({desc:"授权失败"});
+			this.$log( "err" , err );
+		})
+	},
+
+	mounted(){
+
+	},
+
+	destroyed(){
+
+	},
+
+	methods:{
+
+		// ...mapMutatiosn([]),
+		// ...mapActions([])
+
+	}
+}
+
+
+</script>
+
+<style scoped>
+
+</style>

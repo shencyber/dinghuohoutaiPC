@@ -101,12 +101,11 @@ export default{
 			)
 			.then( res=>{
 
-
+					console.log( "用户信息" , res );
 				
 				if( 0 == res.data.status )
 				{
 
-					console.log( "用户信息" , res );
 					
 					this.setLoginInfo( res.data.result );
 					this.$log( "user info" , res.data.result );

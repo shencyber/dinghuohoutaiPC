@@ -75,6 +75,13 @@ const store = new Vuex.Store ({
 
 		// 商品上架
 		goodsShangJiaApi(state){return state.baseurl + 'index/goods/shangjia'},
+
+
+		// 供货商相关
+		hasUserIdYPApi(state){return state.baseurl + 'index/ghs/hasUseridYP'},
+
+		// 又拍相册授权
+		authorizeYP( state ){ return state.baseurl + 'index/ghs/auhorize' },
 		//重置密码
 		// resetPasswordApi( state ){ return state.baseurl + 'resetPassword' },
 

@@ -1,15 +1,16 @@
+<!-- 添加又拍相册页面 -->
+
 <template>
 <div>
 	
-		
-
-
 
 	<div class="single-page-con">
 
-		<Button type="primary">+添加本地商品</Button>
-		<Button type="warning" @click="gotoAddAlbum()">+添加相册商品</Button>
-		<Form :label-width="80">
+
+
+		<!-- 第一部获取该用户的 -->
+		
+		<!-- <Form :label-width="80">
 		
 			<FormItem label="名称">
 	            <Input style="max-width:700px;" v-model="name" placeholder="Enter something..."></Input>
@@ -24,38 +25,6 @@
 	            <Input style="width:80px;" v-model="unit" placeholder="输入单位..."></Input>
 	        </FormItem>
 
-	        
-	        <FormItem style='border:1px solid green;' label="图片"> 
-	        	<div style="display: inline-block;margin-top:10px;" class="demo-upload-list"  v-for="item in uploadList">
-		        <!-- <template v-if="item.status === 'finished'"> -->
-		            <img :src="item.longUrl">
-		            <div class="demo-upload-list-cover">
-		                <!-- <Icon type="ios-eye-outline" ></Icon>
-		                <Icon type="ios-trash-outline" ></Icon> -->
-		                <Icon type="ios-eye-outline" @click.native="handleView(item)"></Icon>
-		                <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
-		            </div>
-		        <!-- </template> -->
-		        <!-- <template v-else> -->
-		            <!-- <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress> -->
-		        <!-- </template> -->
-		        
-				</div>
-		        <Upload
-			        ref="upload"
-			        name="image"
-			        :show-upload-list=false
-			        :action=uploadGoodsImageApi
-			        multiple
-			        :on-success	="handleSuccess"
-			        :on-error="handleError"
-			        style="position:relative;border:1px solid blue;display: inline-block;width:60px;height:60px;text-align: center;">
-			        <div style="width: 60px;height:60px;line-height: 60px;">
-			            <Icon type="ios-camera" size="20"></Icon>
-			        </div>
-			    </Upload>
-	        </FormItem>
-
 	        <FormItem>
 	        	<Button type="primary" @click="public">发布</Button>
 	        </FormItem>
@@ -65,7 +34,7 @@
 		
 		<Modal title="View Image" v-model="visible">
 	        <img :src="yulan" style="width: 100%">
-	    </Modal>
+	    </Modal> -->
 
 	</div>
 
@@ -81,21 +50,20 @@
 	export default{
 		data(){
 			return {
-				APPID:'10006',
 				name:null, //名称
 				desc:null, //描述
 				unitprice:0, //单价
 				unit:null, //单位
 				yulan:null,  //预览
 				visible:false,//
-				// uploadList:['http://e.hiphotos.baidu.com/image/pic/item/b151f8198618367afe76969623738bd4b21ce5fa.jpg'],
+				
 				uploadList:[],
 			}
 		},
 	
 		computed:{
 
-		 	...mapGetters(['uploadGoodsImageApi' , 'publicGoodsApi' ,'hasUserIdYPApi']),
+		 	...mapGetters(['uploadGoodsImageApi' , 'publicGoodsApi']),
 		 	
 	    }
 
@@ -185,29 +153,7 @@
 			//跳转到发布相册页面 
 			,gotoAddAlbum()
 			{
-				//1、首先获取用户又拍的userid，如果没有则跳转到又拍的登录页面
-				//1、
-
-				this.$axios.post(
-					this.hasUserIdYPApi,
-					{'ghsid':this.$cookie.get('uid')}
-				)
-				.then(res=>{
-					// console.log(res);return;
-					if( 0 == res.data.status )
-					{
-						
-						this.$router.push({name:'addalbum'});
-					}
-					else
-					{
-						window.location.href=`https://x.yupoo.com/authorization?client_id=${this.APPID}&redirect_uri=http://localhost:8080/#/bridging`;
-					}
-				
-				})
-				.catch(err=>{
-					this.$log( "gotoAddAlbum" , err );
-				})
+				this.$router.push({name:"addAlbum"})
 			}
 		}
 	}
