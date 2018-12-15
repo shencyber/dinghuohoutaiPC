@@ -197,7 +197,7 @@
 					if( 0 == res.data.status )
 					{
 						
-						this.$router.push({name:'addalbum'});
+						this.$router.push({name:'addAlbum'});
 					}
 					else
 					{

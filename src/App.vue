@@ -26,7 +26,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   font-size:14px;
-}.single-page-con{
+}
+
+.single-page-con{
     position: absolute;
     top: 60px;
     left:180px;

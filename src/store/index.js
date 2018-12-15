@@ -82,6 +82,9 @@ const store = new Vuex.Store ({
 
 		// 又拍相册授权
 		authorizeYP( state ){ return state.baseurl + 'index/ghs/auhorize' },
+
+		//根据供货商id获取相应的相册（带分页）
+		getAlbumsByGhsIdApi(state){return state.baseurl + 'index/ghs/getAlbumsByGhsId'},
 		//重置密码
 		// resetPasswordApi( state ){ return state.baseurl + 'resetPassword' },
 
