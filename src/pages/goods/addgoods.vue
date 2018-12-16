@@ -157,6 +157,7 @@
 					name  : this.name ,
 					desc  : this.desc ,
 					unitprice : this.unitprice ,
+					unit : this.unit ,
 					shorturls : []
 				};
 
