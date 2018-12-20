@@ -95,7 +95,7 @@
 	
 		computed:{
 
-		 	...mapGetters(['uploadGoodsImageApi' , 'publicGoodsApi' ,'hasUserIdYPApi']),
+		 	...mapGetters(['uploadGoodsImageApi' , 'publicGoodsApi' ,'isExpireTokenYPAPi']),
 		 	
 	    }
 
@@ -186,23 +186,25 @@
 			//跳转到发布相册页面 
 			,gotoAddAlbum()
 			{
-				//1、首先获取用户又拍的userid，如果没有则跳转到又拍的登录页面
-				//1、
+				//1、首先获取用户又拍的userid是否存在或者token是否已经过期，如果没有则跳转到又拍的登录页面
 
 				this.$axios.post(
-					this.hasUserIdYPApi,
+					this.isExpireTokenYPAPi,
 					{'ghsid':this.$cookie.get('uid')}
 				)
 				.then(res=>{
 					// console.log(res);return;
 					if( 0 == res.data.status )
 					{
-						
+						if( res.data.result )
 						this.$router.push({name:'addAlbum'});
+						else
+						window.location.href=`https://x.yupoo.com/authorization?client_id=${this.APPID}&redirect_uri=${window.location.origin}/bridging`;
+							
 					}
 					else
 					{
-						window.location.href=`https://x.yupoo.com/authorization?client_id=${this.APPID}&redirect_uri=http://localhost:8080/#/bridging`;
+						console.log( res );
 					}
 				
 				})

@@ -8,17 +8,17 @@ Vue.use(VueCookie)
 
 var router =  new Router({
 
-  //mode:"history",
+  mode:"history",
 
   routes: [
 
-
+    
     {
       path: '/',
       name: 'login',
-      // component:  resolve => require(['../pages/login.vue'], resolve)//懒加载
+      component:  resolve => require(['../pages/login.vue'], resolve)//懒加载
       // component:  resolve => require(['../pages/goods/goodslist.vue'], resolve)//懒加载
-      component:  resolve => require(['../pages/goods/addgoods.vue'], resolve)//懒加载
+      // component:  resolve => require(['../pages/goods/addgoods.vue'], resolve)//懒加载
       // component:  resolve => require(['../pages/me/me.vue'], resolve)//懒加载
       // component:  resolve => require(['../pages/order/orderlist.vue'], resolve)//懒加载
       // component:  resolve => require(['../pages/order/orderdetail.vue'], resolve)//懒加载

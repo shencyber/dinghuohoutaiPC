@@ -9,7 +9,7 @@
 
 <script>
 
-// import { mapState , mapGetters , mapMutations , mapActions   } from 'vuex'
+import { mapGetters    } from 'vuex'
 
 export default{
 	data(){
@@ -34,38 +34,26 @@ export default{
 			{ token : this.token , openid : this.openId , userid : this.$cookie.get('uid') }
 		)
 		.then(res=>{
-			
+			console.log( "授权成功" , res );
 			if( 0 ==res.data.status )
 			{
-				this.Notice.success({desc:"授权成功"});
+				this.$Notice.success({title:"授权成功"});
 				this.$router.push({name:'addalbum'});
+				this.$router.push({name:"addalbum"});
 			}
 			else
 			{
-				this.Notice.error({desc:"授权失败"});
+				this.$Notice.error({title:"授权失败"});
 			}
 		
 		})
 		.catch(err=>{
-			this.Notice.error({desc:"授权失败"});
-			this.$log( "err" , err );
+			this.$Notice.error({title:"授权失败"});
+			console.log( "err" , err );
 		})
-	},
-
-	mounted(){
-
-	},
-
-	destroyed(){
-
-	},
-
-	methods:{
-
-		// ...mapMutatiosn([]),
-		// ...mapActions([])
-
 	}
+
+	
 }
 
 
