@@ -23,7 +23,7 @@ var router =  new Router({
       // component:  resolve => require(['../pages/order/orderlist.vue'], resolve)//懒加载
       // component:  resolve => require(['../pages/order/orderdetail.vue'], resolve)//懒加载
       // component:  resolve => require(['../pages/order/orderdetail.vue'], resolve)//懒加载
-      //component: login
+      // component :  resolve => require(['../pages/goods/catelist.vue'] . resolve)
       ,meta:[ "ALL"]
     },
 

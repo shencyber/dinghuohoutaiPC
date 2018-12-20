@@ -6,21 +6,36 @@
 dgdf;g;ldl;
 <div class="single-page-con">
 
-	<Collapse v-model="value1" v-for="(item , index) in cate">
-        <Panel name="1">
-            {{item.alubmname}}
-            
-            <img v-for="(subitem , subindex) in item.goods" :src="subitem.cover" style="width:50px;height:50px;">
+	<!-- <ul v-for="(item , index) in cate" style="border:1px solid green;">
+		<li>{{item.albumname}}</li>
+		<li v-for="(subitem , subindex) in item.goods">
+			<img :src="subitem.cover" style="width:50px;height:50px;">
+		</li>
+	</ul> -->
+
+
+	<Collapse  v-for="(item , index) in cate">
+        <Panel>
+            {{item.albumname}}
+             <p  slot="content">
+            	<!-- <div style="border:1px solid red;width:180px;height:180px;"> -->
+            		<Row>
+            			<Col @mouseover="viewTongbuBt( index , subindex )" style="position:relative;" span="4" v-for="(subitem , subindex) in item.goods">
+            				
+			            	<img @mouseenter="viewTongbuBt( index , subindex ,1 )" @mouseleave="viewTongbuBt( index , subindex ,2 )" :src="subitem.cover" style="margin:10px;width:180px;height:180px;border:1px solid gray;">
+			            	<h5>{{subitem.name}}</h5>
+			            	<div v-show="subitem.show" style="pointer-events:none;position: absolute;top:10px;left:10px;width:180px;height:180px; background:rgba(0,0,0,0.3);" >
+				            <Button  type="primary"  style="width:120px;position: absolute;top:75px;left:30px;">同步</Button>
+			            		
+			            	</div>
+            			</Col>
+            		</Row>
+
+            	<!-- </div> -->
+             </p>
 
         </Panel>
-        <Panel name="2">
-            斯蒂夫·盖瑞·沃兹尼亚克
-            <p slot="content">斯蒂夫·盖瑞·沃兹尼亚克（Stephen Gary Wozniak），美国电脑工程师，曾与史蒂夫·乔布斯合伙创立苹果电脑（今之苹果公司）。斯蒂夫·盖瑞·沃兹尼亚克曾就读于美国科罗拉多大学，后转学入美国著名高等学府加州大学伯克利分校（UC Berkeley）并获得电机工程及计算机（EECS）本科学位（1987年）。</p>
-        </Panel>
-        <Panel name="3">
-            乔纳森·伊夫
-            <p slot="content">乔纳森·伊夫是一位工业设计师，现任Apple公司设计师兼资深副总裁，英国爵士。他曾参与设计了iPod，iMac，iPhone，iPad等众多苹果产品。除了乔布斯，他是对苹果那些著名的产品最有影响力的人。</p>
-        </Panel>
+       
     </Collapse>		
 
 </div>
@@ -35,6 +50,7 @@ dgdf;g;ldl;
 	export default{
 		data(){
 			return {
+				APPID:'10006',
 				duration:1,  //notice提示持续时间
 
 				list:[
@@ -68,14 +84,24 @@ dgdf;g;ldl;
 				{ghsid:this.$cookie.get('uid')}
 			)
 			.then( res=>{
-				console.log( res );
+				console.log( "res" , res );
 				if( 0 == res.data.status )
 				{
 					this.cate = res.data.result ;
+					for( let i in this.cate )
+					{
+						for( let j in this.cate[i]['goods'] )
+						{
+							this.cate[i]['goods'][j]['show'] = false; 
+						}
+					}
+					console.log( "cate" ,this.cate );
 				}
-				else
+				else if( 1 == res.data.status )
 				{
-					console.log( res );
+					//token已过期，跳转到又拍登录页面
+					window.location.href=`https://x.yupoo.com/authorization?client_id=${this.APPID}&redirect_uri=${window.location.origin}/bridging`;
+					// console.log( res );
 				}
 			} )
 			.catch( err=>{
@@ -175,6 +201,24 @@ dgdf;g;ldl;
 				
 			}
 
+
+			/**
+			 * [viewTongbuBt 相册鼠标事件]
+			 * @param  {[type]} index    [cate下标]
+			 * @param  {[type]} subindex [cate->gooods下标]
+			 * @param  {[type]} type     [1-鼠标进入  2-鼠标移除]
+			 * @return {[type]}          [description]
+			 */
+			,viewTongbuBt( index , subindex , type ){
+				console.log( index , subindex );
+				this.cate[index]['goods'][subindex]['show'] = (1==type)?true:false ;
+				this.$set( this.cate , index , this.cate[index] );
+				// var good = this.cate[index]['goods'];
+				// goods[subindex]['show'] = true ;
+				// this.$set( this.cate[index]['goods'] , subindex , true );
+				console.log( "cate" , this.cate );
+			}
+
 			// handleSuccess(response , file , filelist)
 			// {
 			// 	console.log( response );
@@ -268,6 +312,8 @@ dgdf;g;ldl;
 		list-style:none;
 	}
 
+	li{float:left;}
+
 	.itemgood{
 		margin:10px 0;
 		border:1px solid red;
@@ -325,4 +371,9 @@ dgdf;g;ldl;
     }
 	/*upload end*/
 
+
+	/*.tongbu_bt{
+		position: absolute;top:100px;left:40px;
+		width:120px;
+	}*/
 </style>

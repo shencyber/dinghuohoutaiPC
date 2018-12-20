@@ -38,8 +38,7 @@ export default{
 			if( 0 ==res.data.status )
 			{
 				this.$Notice.success({title:"授权成功"});
-				this.$router.push({name:'addalbum'});
-				this.$router.push({name:"addalbum"});
+				this.$router.replace({name:'catelist'});
 			}
 			else
 			{
