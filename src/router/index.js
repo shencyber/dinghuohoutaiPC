@@ -87,6 +87,14 @@ var router =  new Router({
     },
 
     {
+      path: '/catelist',
+      name: 'catelist',
+      component:  resolve => require(['../pages/goods/catelist.vue'], resolve)//懒加载
+      //component: login
+      ,meta:[ "ALL"]
+    },
+
+    {
       path: '/addalbum',
       name: 'addAlbum',
       component:  resolve => require(['../pages/goods/addalbum.vue'], resolve)//懒加载

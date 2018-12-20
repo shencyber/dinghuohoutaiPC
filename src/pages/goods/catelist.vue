@@ -3,79 +3,27 @@
 <template>
 <div>
 	
+dgdf;g;ldl;
+<div class="single-page-con">
 
-	<div class="single-page-con">
+	<Collapse v-model="value1" v-for="(item , index) in cate">
+        <Panel name="1">
+            {{item.alubmname}}
+            
+            <img v-for="(subitem , subindex) in item.goods" :src="subitem.cover" style="width:50px;height:50px;">
 
-		<!-- 相册分页数据 -->
-		<ul style="float:left;width:70%;">
-			<li v-for="(good,index) in list" class="itemgood" >
-				<Row>
-					<Col span=4>
-						<p class="subitem" ><img :src="good.longUrl"></p>
-					</Col>
-					<Col span=20>
-						<p class="subitem"><b>商品名称:</b>{{good.name}}</p>
-						<p class="subitem"><b>商品描述:</b>{{good.description}}</p>
-					</Col>
-				</Row>
-				<Row  type="flex" justify="end" >
-					<Col  span=4>
-						<Button v-if="btTxts[index]" long style="margin: 5px 0;" type="success" @click.native="chooseToggle(index , false)" >已选</Button>
-						<Button v-else  long style="margin: 5px 0;" type="primary" @click.native="chooseToggle(index , true)" >选择</Button>
+        </Panel>
+        <Panel name="2">
+            斯蒂夫·盖瑞·沃兹尼亚克
+            <p slot="content">斯蒂夫·盖瑞·沃兹尼亚克（Stephen Gary Wozniak），美国电脑工程师，曾与史蒂夫·乔布斯合伙创立苹果电脑（今之苹果公司）。斯蒂夫·盖瑞·沃兹尼亚克曾就读于美国科罗拉多大学，后转学入美国著名高等学府加州大学伯克利分校（UC Berkeley）并获得电机工程及计算机（EECS）本科学位（1987年）。</p>
+        </Panel>
+        <Panel name="3">
+            乔纳森·伊夫
+            <p slot="content">乔纳森·伊夫是一位工业设计师，现任Apple公司设计师兼资深副总裁，英国爵士。他曾参与设计了iPod，iMac，iPhone，iPad等众多苹果产品。除了乔布斯，他是对苹果那些著名的产品最有影响力的人。</p>
+        </Panel>
+    </Collapse>		
 
-					</Col>
-				</Row>
-
-			</li>
-		</ul>
-
-		<!-- 选中部分 -->
-		<ul style="float:right;width:30%;border:1px solid black;">
-			<!-- <li v-for="(good,index) in choosedGoods" class="itemgood" >
-				<p class="subitem"><label>商品名称</label>{{good.name}}</p>
-				<p class="subitem"><label>商品描述</label>{{good.description}}</p>
-				
-				<p class="subitem"><label>封面</label><img :src="good.longUrl"></p>
-			</li> -->
-
-			<li v-for="(good,index) in choosedGoods" class="itemgood" >
-				<Row>
-					<Col span=4>
-						<p class="rightsubitem subitem" ><img :title="good.name" style="width:100%;"  :src="good.longUrl"></p>
-					</Col>
-					<Col span=20>
-						<!-- <p style="text-overflow:ellipsis ;display:inline-block;background-color:gray;height: 20px;width:100%;margin-bottom:10px;" title="kglldg"><b>商品名称:</b>{{good.name}}</p> -->
-
-
-						<p :title="good.name" style="overflow:hidden;text-overflow:ellipsis;background-color:gray;height: 20px;margin-bottom:10px;"><b>商品名称:</b>{{good.name}}</p>
-
-						<p :title="good.description" style="overflow:hidden;text-overflow:ellipsis;background-color:gray;height: 20px;margin-bottom:10px;"><b>商品描述:</b>{{good.description}}</p>
-
-						<!-- <p style="text-overflow:ellipsis ;height: 10px;width:100%;margin-bottom:10px;"><b>商品描述:</b>{{good.description}}</p> -->
-					</Col>
-				</Row>
-
-				<Row>
-					<Col  span=4>
-						<Button   long style="margin: 5px 0;" type="primary" @click.native="cancelChoosed(index)" >取消</Button>
-					</Col>
-				</Row>
-
-				<Row>
-					<Col  span=4>
-						<Button   long style="margin: 5px 0;" type="success" @click.native="confirm">上传</Button>
-					</Col>
-				</Row>
-
-
-			</li>
-
-		</ul>	
-		
-
-	</div>
-
-
+</div>
 
 
 </div>

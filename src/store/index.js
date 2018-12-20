@@ -86,6 +86,10 @@ const store = new Vuex.Store ({
 
 		//根据供货商id获取相应的相册（带分页）
 		getAlbumsByGhsIdApi(state){return state.baseurl + 'index/ghs/getAlbumsByGhsId'},
+
+		//获取所有分类及其下面的相册数据
+		getALLCatAndGoodsAPi(state){ return state.baseurl + 'index/youpai/getALLCatAndGoods' },
+
 		//重置密码
 		// resetPasswordApi( state ){ return state.baseurl + 'resetPassword' },
 
