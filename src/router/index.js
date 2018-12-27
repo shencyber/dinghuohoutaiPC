@@ -27,6 +27,7 @@ var router =  new Router({
       ,meta:[ "ALL"]
     },
 
+    //订单列表
     {
       path: '/orderlist',
       name: 'orderlist',
@@ -35,6 +36,7 @@ var router =  new Router({
       ,meta:[ "ALL"]
     },
 
+    //订单详情
     {
       path: '/d',
       name: 'orderdetail',
@@ -44,6 +46,7 @@ var router =  new Router({
     },
 
 
+    //商品列表
     {
       path: '/gl',
       name: 'goodslist',
@@ -52,6 +55,7 @@ var router =  new Router({
       ,meta:[ "ALL"]
     },
 
+    //商品详情
     { 
       path: '/gd',
       name: 'goodsdetail',
@@ -60,13 +64,13 @@ var router =  new Router({
       ,meta:[ "ALL"]
     },
 
-    {
-      path: '/up',
-      name: 'up',
-      component:  resolve => require(['../pages/goods/goodsup.vue'], resolve)//懒加载
-      //component: login
-      ,meta:[ "ALL"]
-    },
+    // {
+    //   path: '/up',
+    //   name: 'up',
+    //   component:  resolve => require(['../pages/goods/goodsup.vue'], resolve)//懒加载
+    //   //component: login
+    //   ,meta:[ "ALL"]
+    // },
 
       {
       path: '/update',
@@ -77,7 +81,7 @@ var router =  new Router({
     },
 
 
-
+    // 添加本地商品 
     {
       path: '/addgoods',
       name: 'addgoods',
@@ -85,6 +89,8 @@ var router =  new Router({
       //component: login
       ,meta:[ "ALL"]
     },
+
+    
 
     {
       path: '/catelist',
@@ -94,6 +100,7 @@ var router =  new Router({
       ,meta:[ "ALL"]
     },
 
+    // 添加又拍商品 
     {
       path: '/addalbum',
       name: 'addAlbum',
