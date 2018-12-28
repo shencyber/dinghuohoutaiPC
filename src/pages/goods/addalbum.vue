@@ -6,6 +6,8 @@
 
 	<div class="single-page-con">
 
+
+
 		<!-- 相册分页数据 -->
 		<ul style="float:left;width:70%;">
 			<li v-for="(good,index) in list" class="itemgood" >
@@ -116,7 +118,8 @@
 
 		,created(){
 
-			this.getCate();
+			this.getAlbums();
+			// this.getCate();
 			// this.getAlbums(  );
 			
 		}

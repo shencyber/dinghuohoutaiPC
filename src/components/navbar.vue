@@ -19,7 +19,7 @@
                         商品管理
                     </template>
                     <MenuItem ><router-link :to="{name:'addgoods'}">本地上架</router-link></MenuItem>
-                    <MenuItem ><router-link :to="{name:'addAlbum'}">又拍上架</router-link></MenuItem>
+                    <MenuItem ><router-link :to="{name:'catelist'}">又拍上架</router-link></MenuItem>
                     <MenuItem ><router-link :to="{name:'goodslist'}">商品列表</router-link></MenuItem>
                 </Submenu>
                 

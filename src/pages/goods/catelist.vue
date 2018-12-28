@@ -20,14 +20,17 @@ dgdf;g;ldl;
              <p  slot="content">
             	<!-- <div style="border:1px solid red;width:180px;height:180px;"> -->
             		<Row>
-            			<Col @mouseover="viewTongbuBt( index , subindex )" style="position:relative;" span="4" v-for="(subitem , subindex) in item.goods">
+            			<Col  style="position:relative;border:1px solid red;" span="4" v-for="(subitem , subindex) in item.goods">
             				
-			            	<img @mouseenter="viewTongbuBt( index , subindex ,1 )" @mouseleave="viewTongbuBt( index , subindex ,2 )" :src="subitem.cover" style="margin:10px;width:180px;height:180px;border:1px solid gray;">
+            				<img   :src="subitem.cover" style="margin:10px;width:180px;height:180px;border:1px solid gray;">
 			            	<h5>{{subitem.name}}</h5>
-			            	<div v-show="subitem.show" style="pointer-events:none;position: absolute;top:10px;left:10px;width:180px;height:180px; background:rgba(0,0,0,0.3);" >
-				            <Button  type="primary"  style="width:120px;position: absolute;top:75px;left:30px;">同步</Button>
+			            	<div class="album" style="position: absolute;top:10px;left:10px;width:180px;height:180px; background:rgba(0,0,0,0.3);" >
+				            <Button class="button" @click="tongbu(index,subindex)" type="primary"   style="cursor:pointer;width:120px;position: absolute;top:75px;left:30px;">同步</Button>
 			            		
 			            	</div>
+
+
+			            	
             			</Col>
             		</Row>
 
@@ -73,6 +76,7 @@ dgdf;g;ldl;
 		 		'publicGoodsApi' , 
 		 		'getAlbumsByGhsIdApi' ,
 		 		'getALLCatAndGoodsAPi'  //获取用户的又拍相册的所有分类及对应的相册信息
+		 		,'tongBuAlbumApi'  // 同步相册
 		 		]),
 		 	
 	    }
@@ -88,14 +92,14 @@ dgdf;g;ldl;
 				if( 0 == res.data.status )
 				{
 					this.cate = res.data.result ;
-					for( let i in this.cate )
-					{
-						for( let j in this.cate[i]['goods'] )
-						{
-							this.cate[i]['goods'][j]['show'] = false; 
-						}
-					}
-					console.log( "cate" ,this.cate );
+					// for( let i in this.cate )
+					// {
+					// 	for( let j in this.cate[i]['goods'] )
+					// 	{
+					// 		this.cate[i]['goods'][j]['show'] = false; 
+					// 	}
+					// }
+					// console.log( "cate" ,this.cate );
 				}
 				else if( 1 == res.data.status )
 				{
@@ -111,6 +115,24 @@ dgdf;g;ldl;
 
 		,methods:{
 
+			tongbu( index , subindex ){
+				// console.log( this.cate[index]['goods'][subindex] );
+				let goods = this.cate[index]['goods'][subindex] ;
+				this.$axios.post(
+					this.tongBuAlbumApi,
+					{ "name":goods['name'] , "desc":""  , "ghsid":this.$cookie.get('uid') , "youpaialbumid":goods['id'] }
+				)
+				.then( res=>{
+
+					console.log( res );
+					
+
+
+				} ).catch(err=>{
+					console.log( err );
+				});
+
+			},
 
 			getAlbums()
 			{
@@ -202,22 +224,7 @@ dgdf;g;ldl;
 			}
 
 
-			/**
-			 * [viewTongbuBt 相册鼠标事件]
-			 * @param  {[type]} index    [cate下标]
-			 * @param  {[type]} subindex [cate->gooods下标]
-			 * @param  {[type]} type     [1-鼠标进入  2-鼠标移除]
-			 * @return {[type]}          [description]
-			 */
-			,viewTongbuBt( index , subindex , type ){
-				console.log( index , subindex );
-				this.cate[index]['goods'][subindex]['show'] = (1==type)?true:false ;
-				this.$set( this.cate , index , this.cate[index] );
-				// var good = this.cate[index]['goods'];
-				// goods[subindex]['show'] = true ;
-				// this.$set( this.cate[index]['goods'] , subindex , true );
-				console.log( "cate" , this.cate );
-			}
+			
 
 			// handleSuccess(response , file , filelist)
 			// {
@@ -376,4 +383,16 @@ dgdf;g;ldl;
 		position: absolute;top:100px;left:40px;
 		width:120px;
 	}*/
+
+	.album:hover{
+		background-color: green;
+	}
+
+	.button{
+		display: none;
+	}
+
+	.album:hover .button{
+		display:inline-block;
+	}
 </style>
