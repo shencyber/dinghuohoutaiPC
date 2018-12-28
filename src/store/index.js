@@ -10,6 +10,8 @@ Vue.use(VueCookie);
 
 const store = new Vuex.Store ({
 	state:{
+
+		APPID : 10006,
 		count:0, //未读消息数量
 
 		role:'',  //用户角色

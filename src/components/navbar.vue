@@ -4,7 +4,7 @@
 
 <Row>
         <Col span="8">
-            <Menu :theme="theme2">
+            <Menu>
                 <Submenu name="1">
                     <template slot="title">
                         <router-link :to="{name:'orderlist'}">订单管理</router-link>
@@ -15,29 +15,14 @@
                 </Submenu>
                 <Submenu name="2">
                     <template slot="title">
-                        <Icon type="ios-people" />
+                        <!-- <Icon type="ios-people" /> -->
                         商品管理
                     </template>
                     <MenuItem ><router-link :to="{name:'addgoods'}">本地上架</router-link></MenuItem>
                     <MenuItem ><router-link :to="{name:'addAlbum'}">又拍上架</router-link></MenuItem>
                     <MenuItem ><router-link :to="{name:'goodslist'}">商品列表</router-link></MenuItem>
-                    <MenuItem ></MenuItem>
                 </Submenu>
-                <Submenu name="3">
-                    <template slot="title">
-                        <Icon type="ios-stats" />
-                        统计分析
-                    </template>
-                    <MenuGroup title="使用">
-                        <MenuItem name="3-1">新增和启动</MenuItem>
-                        <MenuItem name="3-2">活跃分析</MenuItem>
-                        <MenuItem name="3-3">时段分析</MenuItem>
-                    </MenuGroup>
-                    <MenuGroup title="留存">
-                        <MenuItem name="3-4">用户留存</MenuItem>
-                        <MenuItem name="3-5">流失用户</MenuItem>
-                    </MenuGroup>
-                </Submenu>
+                
             </Menu>
         </Col>
      
@@ -106,9 +91,9 @@ export default{
         // this.getNavBar( this.$cookie.get("uid_admin") );
 
 
-        this.role = this.$cookie.get('role_admin') ;
+        // this.role = this.$cookie.get('role_admin') ;
 
-        this.username = this.$cookie.get("username_admin");
+        // this.username = this.$cookie.get("username_admin");
 
     },
 

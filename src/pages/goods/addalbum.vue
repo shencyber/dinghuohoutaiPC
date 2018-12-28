@@ -82,7 +82,7 @@
 </template>
 
 <script type="text/javascript">
-	import {mapGetters} from 'vuex';
+	import { mapState , mapGetters } from 'vuex';
 
 	export default{
 		data(){
@@ -104,6 +104,7 @@
 	
 		computed:{
 
+			...mapState([ 'APPID' ]),
 		 	...mapGetters([
 		 		'uploadGoodsImageApi' , 
 		 		'publicGoodsApi' , 
@@ -114,28 +115,39 @@
 	    }
 
 		,created(){
-			// this.getAlbums(  );
-			this.$axios.post(
-				this.getALLCatAndGoodsAPi,
-				{ghsid:this.$cookie.get('uid')}
-			)
-			.then( res=>{
-				console.log( res );
-				if( 0 == res.data.status )
-				{
-					this.cate = res.data.result ;
-				}
-				else
-				{
-					console.log( res );
-				}
-			} )
-			.catch( err=>{
 
-			} );
+			this.getCate();
+			// this.getAlbums(  );
+			
 		}
 
 		,methods:{
+
+			//获取所有分类
+			getCate(){
+
+				this.$axios.post(
+					this.getALLCatAndGoodsAPi,
+					{ghsid:this.$cookie.get('uid')}
+				)
+				.then( res=>{
+					console.log( res );
+					if( 0 == res.data.status )
+					{
+						this.cate = res.data.result ;
+					}
+					else if( 1 == res.data.status )
+					{
+						//token已过期，跳转到又拍登录页面
+						window.location.href=`https://x.yupoo.com/authorization?client_id=${this.APPID}&redirect_uri=${window.location.origin}/bridging`;
+						// console.log( res );
+					}
+				} )
+				.catch( err=>{
+					console.log( err );
+				} );
+
+			},
 
 
 			getAlbums()

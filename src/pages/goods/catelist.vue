@@ -45,12 +45,11 @@ dgdf;g;ldl;
 </template>
 
 <script type="text/javascript">
-	import {mapGetters} from 'vuex';
+	import {mapState , mapGetters} from 'vuex';
 
 	export default{
 		data(){
 			return {
-				APPID:'10006',
 				duration:1,  //notice提示持续时间
 
 				list:[
@@ -67,6 +66,7 @@ dgdf;g;ldl;
 		},
 	
 		computed:{
+			...mapState([ 'APPID' ]),
 
 		 	...mapGetters([
 		 		'uploadGoodsImageApi' , 
