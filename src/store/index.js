@@ -93,7 +93,7 @@ const store = new Vuex.Store ({
 		getALLCatAndGoodsAPi(state){ return state.baseurl + 'index/youpai/getALLCatAndGoods' },
 
 		///同步又拍相册
-		tongBuAlbumApi( state ){ return state.baseurl + 'index/goods/tongBuYP' },
+		tongBuAlbumApi( state ){ return state.baseurl + 'index/youpai/tongBuYP' },
 
 		//重置密码
 		// resetPasswordApi( state ){ return state.baseurl + 'resetPassword' },

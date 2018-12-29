@@ -3,7 +3,7 @@
 <template>
 <div>
 	
-dgdf;g;ldl;
+
 <div class="single-page-con">
 
 	<!-- <ul v-for="(item , index) in cate" style="border:1px solid green;">
