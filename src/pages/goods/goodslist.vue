@@ -27,6 +27,7 @@
             <table cellspacing="0">
                 <tr class="head">
                     <td style="padding-left:20px; ">#</td>
+                    <td>图片</td>
                     <td >名称</td>
                     <td>单价</td>
                     <td>已售</td>
@@ -35,6 +36,7 @@
                 </tr>
                 <tr v-for="(item,index) in goodsList">
                     <td style="padding-left:20px; ">{{index + 1 +(currentpage-1) *pagesize }}</td>
+                    <td><img style="width:100px;height:100px;" :src="item.urls[0]"></td>
                     <td>{{item.name}}</td>
                     <td>{{item.unitprice}}</td>
                     <td>{{item.soldamount}}</td>
