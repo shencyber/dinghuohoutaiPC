@@ -16,7 +16,7 @@
 
     <div class="single-page-con">
         
-            <div style="margin-bottom: 30px;">
+            <div style="margin-bottom: 10px;">
                 <span class="left-btn">
                     
                     <span v-bind:class="{ 'btn-select' : typeNum ==1}" @click="selTabFun(1)">已上架</span>
@@ -26,18 +26,18 @@
             </div>
             <table cellspacing="0">
                 <tr class="head">
-                    <td style="padding-left:20px; ">#</td>
-                    <td>图片</td>
-                    <td >名称</td>
+                    <td style="padding:0 20px;text-align: left; ">#</td>
+                    <td style="width:100px;">图片</td>
+                    <td style="width:300px;" >名称</td>
                     <td>单价</td>
                     <td>已售</td>
                     <td>上架时间</td>
                     <td>操作</td>
                 </tr>
                 <tr v-for="(item,index) in goodsList">
-                    <td style="padding-left:20px; ">{{index + 1 +(currentpage-1) *pagesize }}</td>
+                    <td style="padding:0 20px;text-align: left; ">{{index + 1 +(currentpage-1) *pagesize }}</td>
                     <td><img style="width:100px;height:100px;" :src="item.urls[0]"></td>
-                    <td>{{item.name}}</td>
+                    <td style="padding-left:20px;text-align: left;overflow:hidden;text-overflow: ellipsis;">{{item.name}}</td>
                     <td>{{item.unitprice}}</td>
                     <td>{{item.soldamount}}</td>
                     <td>{{item.uptime}}</td>
@@ -54,6 +54,7 @@
             <!--   分页信息 end  -->
         
     </div>
+
     <!-- <foot></foot> -->
 </div>
 </template>
@@ -161,6 +162,12 @@
         }
     </script>
     <style scoped>
+
+    .single-page-con
+    {
+        margin-bottom:20px;
+        /*border:1px solid red;*/
+    }
         .w1200{
             width:100%;
             padding-bottom: 50px;
@@ -209,23 +216,17 @@ table{
 table tr{
 	height: 50px;
 }
-/*table{
-    width: 100%;
-    min-width: 1255px;
-    text-align: center; 
-    line-height: 40px;
-    box-shadow: 0 0 5px  #eeeeee ;
-    min-width: 1400px;
+
+table  tr td{
+    border-bottom:thin solid #ccc;
 }
 
-td{
-    font-size: 14px;
-    padding-left: 20px;
-}*/
+
 .head {
-        background: #e9e9e9;
-        color: #1c1c1c;
-        font-family: "Microsoft YaHei";
+    height:40px;
+    background: #e9e9e9;
+    color: #1c1c1c;
+    font-family: "Microsoft YaHei";
 }
 .head > td{
     font-size: 16px;
