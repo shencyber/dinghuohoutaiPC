@@ -103,6 +103,12 @@ const store = new Vuex.Store ({
 
 		// 更新又拍相册
 		updateYPApi( state ){ return state.baseurl + 'index/youpai/updateYP' },
+
+		// 订单相关
+		// 订单列表
+		getOrderListApi(state){return state.baseurl + 'index/orders/orderListApi'},
+		// 订单详情
+		getOrderDetailApi(state){return state.baseurl + 'index/orders/getDetailApi'},
 		//重置密码
 		// resetPasswordApi( state ){ return state.baseurl + 'resetPassword' },
 
