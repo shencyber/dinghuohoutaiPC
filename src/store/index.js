@@ -97,8 +97,20 @@ const store = new Vuex.Store ({
 
 		//重置密码
 		// resetPasswordApi( state ){ return state.baseurl + 'resetPassword' },
+		
+		/**订单相关**/
 
-	
+		//供货商订单列表
+		orderListApi( state ){ return state.baseurl + 'index/orders/orderListApi' },
+
+		//订单详情
+		orderDetailApi(state){return state.baseurl + 'index/orders/getDetailApi'},
+
+		// 订单收款
+		shouKuanApi( state ){return state.baseurl + 'index/orders/shoukuan'},
+
+		// 发货
+		faHuoApi( state ){return state.baseurl + 'index/orders/fahuo'},
 	},
 	// 修改state中的数据
 	mutations:{
