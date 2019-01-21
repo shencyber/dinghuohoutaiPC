@@ -91,7 +91,7 @@ var router =  new Router({
     },
 
     
-
+    //又拍相册分类列表
     {
       path: '/catelist',
       name: 'catelist',
@@ -99,6 +99,27 @@ var router =  new Router({
       //component: login
       ,meta:[ "ALL"]
     },
+
+    //又拍相册更多分类列表
+    {
+      path: '/morecatelist',
+      name: 'morecatelist',
+      component:  resolve => require(['../pages/goods/morecatelist.vue'], resolve)//懒加载
+      //component: login
+      ,meta:[ "ALL"]
+    },   
+
+
+    //又拍相册详情页
+    {
+      path: '/albumdetail',
+      name: 'albumdetail',
+      component:  resolve => require(['../pages/goods/albumdetail.vue'], resolve)//懒加载
+      //component: login
+      ,meta:[ "ALL"]
+    },   
+
+
 
     // 添加又拍商品 
     {

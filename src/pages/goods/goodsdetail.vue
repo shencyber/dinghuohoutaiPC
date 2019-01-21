@@ -15,33 +15,33 @@
 
 
     <div class="single-page-con">
-        <Row>
+        <Row class="row">
             <Col span=2>状态</Col>
             <Col span=18>{{statusTxt}}</Col>
         </Row>
 
-        <Row>
+        <Row class="row">
             <Col span=2>{{upOrDownTxt}}</Col>
             <Col span=18>{{time}}</Col>
         </Row>
 
-        <Row>
+        <Row class="row">
             <Col span=2>商品名称</Col>
             <Col span=18>{{detail.name}}</Col>
 
         </Row>
 
-        <Row>
+        <Row class="row">
             <Col span=2>商品描述</Col>
             <Col span=18>{{detail.desc}}</Col>
         </Row>
 
-        <Row>
+        <Row class="row">
             <Col span=2>商品价格</Col>
-            <Col span=18>{{detail.unitprice}}</Col>
+            <Col span=18>￥{{detail.unitprice}}  /{{detail.unit}}</Col>
         </Row>        
 
-        <Row>
+        <Row class="row">
             <Col span=2>商品图片</Col>
             <!-- <Col span=4 v-for="item in detail.urls">
                 <img style="width:200px;height:200px;" :src="item">
@@ -58,15 +58,15 @@
              </Col>   
         </Row>
 
-        <Row>
-            <Col v-if="1 == detail.status" span=4><Button type="primary" @click="xiajia(detail.id)">下架</Button></Col>
-            <Col v-if="2 == detail.status" span=4><Button type="primary" @click="shangjia(detail.id)">上架</Button></Col>
-            <Col span=4><Button type="primary" @click="goToUpdate()">修改</Button></Col>
+        <Row class="row">
+            <Col  v-if="1 == detail.status" offset="2" span=3><Button type="primary" long @click="xiajia(detail.id)">下架</Button></Col>
+            <Col  v-if="2 == detail.status" offset="2" span=3><Button type="primary" long @click="shangjia(detail.id)">上架</Button></Col>
+            <Col span=3 offset="1"><Button type="primary" long @click="goToUpdate()">修改</Button></Col>
         </Row>
         
     </div>
 
-    <Modal title="View Image" v-model="visible">
+    <Modal title="大图" cancel-text=""  :closable="false" v-model="visible">
         <img :src="yulan" style="width: 100%;">
     </Modal>
 
@@ -254,6 +254,8 @@
     text-align: center;
 }
 
-
+.row{
+    margin-bottom:10px;
+}
 
 </style>

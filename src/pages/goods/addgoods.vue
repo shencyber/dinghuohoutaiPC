@@ -7,16 +7,16 @@
 
 	<div class="single-page-con">
 
-		<Button type="primary">+添加本地商品</Button>
-		<Button type="warning" @click="gotoAddAlbum()">+添加相册商品</Button>
+		<!-- <Button type="primary">+添加本地商品</Button> -->
+		<!-- <Button type="warning" @click="gotoAddAlbum()">+添加相册商品</Button> -->
 		<Form :label-width="80">
 		
 			<FormItem label="名称">
-	            <Input style="max-width:700px;" v-model="name" placeholder="Enter something..."></Input>
+	            <Input style="max-width:700px;" v-model="name" placeholder="输入商品名称..."></Input>
 	        </FormItem>
 
 	        <FormItem label="描述">
-	            <Input style="max-width:700px;" v-model="desc" type="textarea" placeholder="Enter something..."></Input>
+	            <Input style="max-width:700px;" v-model="desc" type="textarea" placeholder="输入商品描述..."></Input>
 	        </FormItem>
 
 	        <FormItem label="价格">
@@ -110,7 +110,7 @@
 				if( 0 == response.status )
 				{
 					this.uploadList.push(response.result);
-					this.$Notice.success( {desc:"upload  success"} );
+					this.$Notice.success( {desc:"图片上传成功"} );
 				}
 			}
 
@@ -119,7 +119,7 @@
 				console.log( e );
 				console.log( file );
 				this.$Notice.success({
-					content:"上传失败，请重新上传"
+					content:"图片上传失败，请重新上传"
 				})
 			}
 
@@ -175,6 +175,7 @@
 					console.log( res );
 					if( 0 == res.data.status )
 					{
+						this.$Notice.success( {desc:"发布成功"} );
 						this.$router.replace({name:"goodslist"});
 					}
 				})

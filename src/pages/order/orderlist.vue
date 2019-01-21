@@ -4,6 +4,7 @@
 <div class="huoPanSH">
 		
 	<div class="single-page-con">
+
 		<!--面包屑导航 start -->
 		<div class=" bread">
 			<Breadcrumb >
@@ -19,7 +20,6 @@
 
 			<!-- 官方货盘 start -->
 			<div class=" content ">
-
 				<RadioGroup v-model="choosedStatus"  type="button" size="large" @on-change="changeStatus()">
 			        <Radio label="待收款"></Radio>
 			        <Radio label="待发货"></Radio>
@@ -28,12 +28,14 @@
 			    </RadioGroup>
 
 
+
 				<!-- 待开盘 start -->
 				<table class="table" cellspacing="0"  width="100%" >
 					<tr>
 						<th>#</th>
 						<th>订单编号</th>
 						<th>总价</th>
+
 						<th>代理商手机号</th>
 						<th>微信昵称</th>
 						<th>微信头像</th>
@@ -42,26 +44,34 @@
 						<th>快递单号</th>
 						<th>操作</th>
 					</tr>
+
 					<tr v-for="(item , index) in orders" >
+
 						<td>{{(index+1)+pagesize*(currentpage-1)}}</td>
 
 						<td>{{item.ordercode}}</td>
 						<td>{{item.totalprice}}</td>
+
 						<td>{{item.dlsphone}}</td>
+
 						<td>{{item.nickname}}</td>
 
 						<td>{{item.avatar}}</td>
 						<td>{{item.createtime}}</td>
+
 						<td>{{item.statusText}}</td>
 						<td>{{item.expressno}}</td>
 						<td><router-link target="_blank" :to="{name:'orderdetail',query:{orderid:item.id}}">详情</router-link></td>
+
 
 					</tr>
 				</table>
 				<!-- 待开盘 end -->
 
 				<!--分页 start -->
+
 	            <Page  class="page clearfix"  @on-change="changePage" :current="currentpage" :page-size="pagesize" :total="total" show-elevator></Page>
+
 	            <!--分页 end -->
 			</div>
 			<!-- 官方货盘 end -->
@@ -79,28 +89,73 @@ export default {
             return {
                 	
                 choosedStatus:"待收款",
-                pagesize : 10 ,
+                pagesize : 10,
                 currentpage : 1 ,
+
                 total:0,  // 一共有多少条数据
                 status:0,
                 orders:[],  //订单数据
+
             }
         },
 
         computed: {
             ...mapGetters([
+
                 'orderListApi'  //订单列表
+
             ])
         },
 
         created(){
+
         	this.getList( 1 , this.pagesize , 1 );
+
         },
 
         methods:{
 
+        	getList(){
+        		this.$axios.get(
+        			this.getOrderListApi,
 
+        		{
+        			params:{
+	        			ghsid : this.$cookie.get('uid') , 
+	        			currentpage  : this.currentpage , 
+	        			pagesize  : this.pagesize ,
+	        			status   :  this.status 
+	        		}
+        		
+        		}
+	        	).then(res=>{
+	        			console.log( "list" , res );
+	        		if( 0 == res.data.status )
+	        		{
 
+		        		this.list = res.data.result ;
+		        		this.total = res.data.total ;
+	        		}
+	        	}).catch(err=>{
+	        		console.log( "err" , err );
+	        	});
+
+        	},
+
+	        initData(){
+	        	this.currentpage = 1;
+                this.status = 1 ;
+                this.total = 0 ;
+	        	this.list = [] ;
+	        },
+
+        	getMore( e ){
+        		console.log("e" , e);
+        		// this
+        		this.currentpage = e ;
+        		this.getList();
+
+        	},
         	/**
 			*选择不同的状态
         	*/
@@ -109,31 +164,43 @@ export default {
         		switch( this.choosedStatus )
         		{
         			case "待收款":
+	        			this.initData();
         				console.log(1);
         				this.status = 1 ;
+
         				this.init();
         				this.getList( this.currentpage , this.pagesize , 1 );
+
         				break;
 
         			case "待发货":
+	        			this.initData();
         				console.log(2);
+
         				this.status = 2 ;
         				this.init();
         				this.getList( this.currentpage , this.pagesize , 2 );
+
         				break;
 
         			case "已发货":
+	        			this.initData();
         				console.log(3);
+
         				this.status = 3 ;
         				this.init();
         				this.getList( this.currentpage , this.pagesize , 3 );
+
         				break;
 
         			case "已取消":
+	        			this.initData();
         				console.log(4);
+
         				this.status = 4 ;
         				this.init();
         				this.getList( this.currentpage , this.pagesize , 4 );
+
         				break;
         		}
         	}
@@ -152,7 +219,9 @@ export default {
 			*   @param Number <pagesize> [每页显示条数] 
 			*   @param Number <currentpage> [显示第几页] 
         	*/
+
         	,getList( currentpage , pagesize ,  status ){
+
 
         		// if( currentpage * pagesize >= this.total ) return ;
 
@@ -221,6 +290,7 @@ export default {
     }
 
 
+
 </script>
 
 <style scoped>
@@ -246,6 +316,5 @@ export default {
 
 .page{
 	margin:20px 0 ;
-}
 
 </style>

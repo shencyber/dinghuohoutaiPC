@@ -15,30 +15,30 @@
 
 
     <div class="single-page-con" style="padding-bottom:20px;">
-        <Row>
+        <Row class="row">
             <Col span=2>状态</Col>
             <Col span=18>{{statusTxt}}</Col>
         </Row>
 
-        <Row>
+        <Row class="row">
             <Col span=2>{{upOrDownTxt}}</Col>
             <Col span=18>{{time}}</Col>
         </Row>
 
-        <Row>
+        <Row class="row">
             <Col span=2>商品名称</Col>
-            <!-- <Col span=18>{{detail.name}}</Col> -->
-            <Col span=18><Input v-model="detail.name"></Input></Col>
+            <Col v-if="2==detail.source" span=18>{{detail.name}}</Col>
+            <Col v-else span=18><Input v-model="detail.name"></Input></Col>
 
         </Row>
 
-        <Row>
+        <Row class="row">
             <Col span=2>商品描述</Col>
-            <!-- <Col span=18>{{detail.desc}}</Col> -->
-            <Col span=18><Input type="textarea" v-model="detail.desc"></Input></Col>
+            <Col v-if="2==detail.source" span=18>{{detail.desc}}</Col>
+            <Col v-else span=18><Input type="textarea" v-model="detail.desc"></Input></Col>
         </Row>
 
-        <Row>
+        <Row class="row">
             <Col span=2>商品价格</Col>
             <!-- <Col span=18>{{detail.unitprice}}</Col> -->
             <Col span="10">
@@ -48,20 +48,21 @@
         </Row>        
 
 
-        <Row>
+        <Row class="row">
+
             <Col span=2>商品图片</Col>
-            <Col span=22 style="width:1020px;	">
-            	<ul style="width: 100%;border:1px solid red;list-style:none;">
-        		<li v-for="(item,index) in uploadLongList" style="position: relative;margin:1px;float:left;width:180px;height: 180px;-webkit-box-sizing: border-box;box-sizing: border-box;">
-	                <img style="width:180px;height:180px;" :src="item">
-	                <div class="cover">
-		                <Icon type="ios-eye-outline"   size="40" color="#fff" @click.native="handleView(item)"></Icon>
-		                <Icon type="ios-trash-outline" size="40" color="#fff" @click.native="handleRemove(index)"></Icon>
-	                </div>
+            <Col span=22 style="width:1020px;   ">
+                <ul style="width: 100%;list-style:none;">
+                <li v-for="(item,index) in uploadLongList" style="position: relative;margin:1px;float:left;width:180px;height: 180px;-webkit-box-sizing: border-box;box-sizing: border-box;">
+                    <img style="width:180px;height:180px;" :src="item">
+                    <div class="cover">
+                        <Icon type="ios-eye-outline"   size="40" color="#fff" @click.native="handleView(item)"></Icon>
+                        <Icon v-if="2!=detail.source" type="ios-trash-outline" size="40" color="#fff" @click.native="handleRemove(index)"></Icon>
+                    </div>
         		</li>
 
         		<!-- 上传模块 -->
-        		<li style="position: relative;margin:1px;float:left;width:180px;height: 180px;-webkit-box-sizing: border-box;box-sizing: border-box;">
+        		<li v-if="2!=detail.source" style="position: relative;margin:1px;float:left;width:180px;height: 180px;-webkit-box-sizing: border-box;box-sizing: border-box;">
         			
         			<Upload
 				        ref="upload"
@@ -84,7 +85,7 @@
             
         </Row>
 
-        <Row>
+        <Row class="row">
             <Col span=4 offset=2 ><Button type="primary" long @click="updateGoods(detail.id)">保存</Button></Col>
         </Row>
         
@@ -115,7 +116,9 @@
                         name:'',
                         desc:'',
                         unitprice:0,
-                        urls:''
+                        unit:'',
+                        urls:'',
+                        source:''
                     },
 
                     visible:false,
@@ -168,8 +171,9 @@
                 		
                 		if( 0 ==res.data.status )
                 		{
-                			console.log( res );
-                            this.detail = res.data.result
+                			console.log( "nfkgnlkdfgnlkd" , res );
+                            this.detail = res.data.result;
+                            console.log( this.detail );
                             this.uploadLongList = res.data.result.longUrls;
                             this.uploadShortList = res.data.result.shortUrls;
                             console.log( this.uploadLongList );
@@ -197,6 +201,7 @@
                         name:this.detail.name,
                         desc:this.detail.desc,
                         unitprice:this.detail.unitprice,
+                        unit:this.detail.unit,
                         shorturls:this.uploadShortList
                     };
 
@@ -267,7 +272,9 @@
                         name:'',
                         desc:'',
                         unitprice:0,
-                        urls:''
+                        unit:'',
+                        urls:'',
+                        source:''
                     }
                 }
                
@@ -283,6 +290,10 @@
 	top:0;
 	line-height: 200px;
 	text-align: center;
+}
+
+.row{
+    margin-bottom: 10px;
 }
 
 </style>

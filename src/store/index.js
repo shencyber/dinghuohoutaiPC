@@ -92,9 +92,23 @@ const store = new Vuex.Store ({
 		//获取所有分类及其下面的相册数据
 		getALLCatAndGoodsAPi(state){ return state.baseurl + 'index/youpai/getALLCatAndGoods' },
 
+		// 根据分类id获取对应的相册信息
+		getAlbumByCateIdApi( state ){ return state.baseurl+'index/youpai/getAlbumByCatIdApi' },
+
+		// 根据相册id获取对应的图片
+		getPhotoByAlbumIdApi( state ){return state.baseurl + 'index/youpai/getPhotosByAlbumIdApi' } ,
+
 		///同步又拍相册
 		tongBuAlbumApi( state ){ return state.baseurl + 'index/youpai/tongBuYP' },
 
+		// 更新又拍相册
+		updateYPApi( state ){ return state.baseurl + 'index/youpai/updateYP' },
+
+		// 订单相关
+		// 订单列表
+		getOrderListApi(state){return state.baseurl + 'index/orders/orderListApi'},
+		// 订单详情
+		getOrderDetailApi(state){return state.baseurl + 'index/orders/getDetailApi'},
 		//重置密码
 		// resetPasswordApi( state ){ return state.baseurl + 'resetPassword' },
 		

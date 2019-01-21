@@ -4,6 +4,7 @@
 
 	<div class="single-page-con">
 
+
 		 <!--面包屑导航 start -->
 	    <div class="bread" >
 	        <Breadcrumb style="padding-left:10px;">
@@ -96,6 +97,7 @@
 
 	
 	
+
 	</div>
 
 </div>
@@ -103,6 +105,7 @@
 
 <script type="text/javascript">
 	import {mapGetters} from 'vuex'
+
 	
 	export default{
 		
@@ -226,11 +229,13 @@
 				});
 			}
 
+
 		}
 	}
 
 
 </script>
+
 
 <style type="text/css" scoped >
 	.card{
@@ -241,5 +246,6 @@
 	.image{
 		width:100px;
 		height:100px;
+
 	}
 </style>

@@ -14,24 +14,38 @@
 	</ul> -->
 
 
-	<Collapse  v-for="(item , index) in cate">
+	<Collapse style="margin-bottom:10px;" v-for="(item , index) in cate">
         <Panel>
-            {{item.albumname}}
+            {{item.catename}}
              <p  slot="content">
             	<!-- <div style="border:1px solid red;width:180px;height:180px;"> -->
             		<Row>
-            			<Col  style="position:relative;border:1px solid red;" span="4" v-for="(subitem , subindex) in item.goods">
+            			<Col  style="position:relative;border:1px solid gray;padding-bottom: 5px;" span="4" v-for="(subitem , subindex) in item.goods">
             				
-            				<img   :src="subitem.cover" style="margin:10px;width:180px;height:180px;border:1px solid gray;">
-			            	<h5>{{subitem.name}}</h5>
-			            	<div class="album" style="position: absolute;top:10px;left:10px;width:180px;height:180px; background:rgba(0,0,0,0.3);" >
-				            <Button class="button" @click="tongbu(index,subindex)" type="primary"   style="cursor:pointer;width:120px;position: absolute;top:75px;left:30px;">同步</Button>
-			            		
-			            	</div>
+            				<router-link target="_blank" :to="{name:'albumdetail',query:{albumid:subitem.id,name:subitem.name}}">
+            				<img   :src="subitem.cover" style="cursor:pointer;margin:10px;width:180px;height:180px;border:1px solid gray;">
+            				</router-link>
 
+            				<!-- <router-link target="_blank" :to="{name:'morecatelist',query:{cateid:cateid,catename:catename}}">
+            				<img   :src="subitem.cover" style="cursor:pointer;margin:10px;width:180px;height:180px;border:1px solid gray;">
+            				</router-link> -->
 
+			            	<h5 style="width:100%;height:18px;overflow:hidden;text-overflow: ellipsis; ">{{subitem.name}}</h5>
+			            	
+				            <Button class="button" @click="tongbu(index,subindex)" type="primary" :loading="subitem.loading"  >{{subitem.txt}}</Button>
 			            	
             			</Col>
+
+            			<Col  style="position:relative;border:1px solid red;" span="4" >
+            				
+            				<router-link target="_blank" :to="{name:'morecatelist',query:{cateid:item.cateid,ghsid:ghsid,catename:item.catename}}">
+			            	
+            					<div style="width:100%;height:253px;line-height:253px;text-align: center;font-size:30px;color:#999; ">更多</div>
+			            	
+            				</router-link>
+			            	
+            			</Col>
+
             		</Row>
 
             	<!-- </div> -->
@@ -40,6 +54,9 @@
         </Panel>
        
     </Collapse>		
+
+
+    <div style="width: 100%;height: 30px;"></div>
 
 </div>
 
@@ -53,6 +70,7 @@
 	export default{
 		data(){
 			return {
+				ghsid:'',
 				duration:1,  //notice提示持续时间
 
 				list:[
@@ -77,13 +95,24 @@
 		 		'getAlbumsByGhsIdApi' ,
 		 		'getALLCatAndGoodsAPi'  //获取用户的又拍相册的所有分类及对应的相册信息
 		 		,'tongBuAlbumApi'  // 同步相册
-		 		]),
+		 		,'updateYPApi'     //更新相册
+ 		 		]),
 		 	
 	    }
 
 		,created(){
+			this.ghsid = this.$cookie.get('uid');
 			// this.getAlbums(  );
-			this.$axios.post(
+			this.getData();
+		}
+
+		,methods:{
+
+			getData(){
+
+				this.$Loading.start();
+
+					this.$axios.post(
 				this.getALLCatAndGoodsAPi,
 				{ghsid:this.$cookie.get('uid')}
 			)
@@ -92,14 +121,21 @@
 				if( 0 == res.data.status )
 				{
 					this.cate = res.data.result ;
-					// for( let i in this.cate )
-					// {
-					// 	for( let j in this.cate[i]['goods'] )
-					// 	{
-					// 		this.cate[i]['goods'][j]['show'] = false; 
-					// 	}
-					// }
-					// console.log( "cate" ,this.cate );
+					console.log("cate" , this.cate);
+					for( let i in this.cate )
+					{
+						for( let j in this.cate[i]['goods'] )
+						{	
+							if( this.cate[i]['goods'][j]['exists'] )
+							this.cate[i]['goods'][j]['txt'] = '更新';
+							else 
+							this.cate[i]['goods'][j]['txt'] = '同步';
+
+							this.cate[i]['goods'][j]['loading'] = false;
+						}
+					}
+					console.log( "cate" ,this.cate );
+					 this.$Loading.finish();
 				}
 				else if( 1 == res.data.status )
 				{
@@ -109,27 +145,82 @@
 				}
 			} )
 			.catch( err=>{
-
+				console.log(err);
+				this.$Notice.error({desc:"获取数据失败"});
 			} );
-		}
 
-		,methods:{
+
+
+			},
 
 			tongbu( index , subindex ){
-				// console.log( this.cate[index]['goods'][subindex] );
+
+
 				let goods = this.cate[index]['goods'][subindex] ;
+				let exists = goods['exists'] ;  //是否已经在数据库内存在
+				console.log( exists );
+				console.log( this.cate[index]['goods'][subindex] );
+
+				// this.$Modal.info({content:"同步中...",okText:""});
+				let _tmp = this.cate[index]['goods'][subindex] ;
+				if( exists )
+				{
+					_tmp['loading'] = true ;
+					_tmp['txt'] = "更新中..." ;
+				}
+				else
+				{
+					_tmp['loading'] = true ;
+					_tmp['txt'] = "同步中..." ;
+				}
+				this.$set( this.cate[index]['goods'] , subindex , _tmp );
+				// this.cate[index]['goods'][subindex]['loading']  = true ;
+				// console.log( this.cate[index]['goods'][subindex]['loading'] );
+				// this.cate[index]['goods'][subindex]['txt']  = "同步中..." ;
+
+				// return ;
+				let url = goods['exists']?this.updateYPApi:this.tongBuAlbumApi ;
 				this.$axios.post(
-					this.tongBuAlbumApi,
+					url,
 					{ "name":goods['name'] , "desc":""  , "ghsid":this.$cookie.get('uid') , "youpaialbumid":goods['id'] }
 				)
 				.then( res=>{
-
+					let _noticeCon='';
+					if( exists )
+					{
+						_noticeCon='更新成功';
+					}
+					else
+					{
+						_noticeCon='同步成功';
+					}
 					console.log( res );
-					
-
-
-				} ).catch(err=>{
+					if( 0 == res.data.status )
+					{
+						let _tmp = this.cate[index]['goods'][subindex] ;
+						_tmp['loading'] = false ;
+						_tmp['exists'] = true ;
+						_tmp['txt'] = "更新" ;
+						this.$set( this.cate[index]['goods'] , subindex , _tmp );
+						this.$Notice.success({desc:_noticeCon});
+						// this.cate[index]['goods'][subindex]['loading'] = false ;
+						// this.cate[index]['goods'][subindex]['exists']  = true ;
+					}
+					else
+					{
+						if(  exists)
+							this.$Notice.error({desc:"更新失败"});
+						else
+							this.$Notice.error({desc:"同步失败"});
+							
+					}
+				} )
+				.catch(err=>{
 					console.log( err );
+					if(  exists )
+							this.$Notice.error({desc:"更新失败"});
+						else
+							this.$Notice.error({desc:"同步失败"});
 				});
 
 			},
@@ -389,10 +480,14 @@
 	}
 
 	.button{
-		display: none;
+		/*display: none;*/
+		position: relative;
+		left:20%;
+		/*display:inline-block;*/
+		width: 120px;
 	}
 
-	.album:hover .button{
+	/*.album:hover .button{
 		display:inline-block;
-	}
+	}*/
 </style>
