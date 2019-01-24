@@ -4,7 +4,7 @@
 <div class="bg"> 
 <div class="login-container">
 
-	<div class="h1" >XXXXXXXXX</div>
+	<div class="h1" >树懒订货系统</div>
 
 	<div class="login_panel" >
 
@@ -110,24 +110,11 @@ export default{
 					this.setLoginInfo( res.data.result );
 					this.$log( "user info" , res.data.result );
 
-
-                    //请求左侧导航
-                    // try{
-                    // 	this.getNavBar( this.$cookie.get('uid_admin') );
-                    // 	this.getMessageCount();  //未读消息数量
-                    // }
-                    // catch(err)
-                    // {
-                    // 	// console.log( 'err' , err );
-                    // }
-
-                       this.$router.push( { name : "index" } )
-                  		 this.$Message.info({
-                   				content:'登录成功'
-                  				 })
-                  		 this.$router.push({name:'goodslist'});
-                    // }
-                    
+                    this.$router.push( { name : "index" } )
+              		this.$Message.info({
+               				content:'登录成功'
+              				 })
+              		this.$router.push({name:'orderlist'});
 
 				}
 				else
@@ -157,7 +144,6 @@ export default{
 	position:absolute;
 	width:100%;
 	height:100%;
-	/*background-image:url(/assets/logo.png);*/
 	background-image:url(/static/img/bg1.jpg);
 	background-size:cover;
 }

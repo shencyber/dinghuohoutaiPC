@@ -4,7 +4,7 @@
     <!-- logo begin -->
     <div class="logo">
         <!-- <img src="../../static/img/logo.png" align="absmiddle" /> -->
-        <span style="font-size:18px;font-family:'Microsoft Yahei'">XXXXXXXXXXXXXXXXX
+        <span class="title" style="font-size:18px;font-family:'Microsoft Yahei'">树懒订货系统
         </span>
     </div>
     <!-- logo end -->
@@ -20,7 +20,7 @@
 
                 <template slot="title">
                     <Icon type="person"></Icon>
-                    <!-- {{userInfo.userName}} -->
+                    {{username}}
                 </template>
                 <Menu-item name="3-1"><router-link :to="{ name:'logout' }">退出</router-link></Menu-item>
                   
@@ -79,8 +79,8 @@
 
             // if( this.$cookie.get( 'uid_admin' ) )  this.setLoginStatus( true );
             // this.setAccountInfo();
-            // this.username = this.$cookie.get("username_admin");
-
+            this.username = this.$cookie.get("name");
+            console.log( this.$cookie.get('name') );
             // this.$log( "登录黄台" , this.isLogin );
         },
 

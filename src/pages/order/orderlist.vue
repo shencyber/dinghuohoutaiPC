@@ -241,7 +241,7 @@ export default {
 	        		if( 0 != res.data.status )
 	        		{
 	        			this.$Notice.error({
-	        				content:"获取订单列表失败"
+	        				title:"获取订单列表失败"
 	        			});
 	        		}
 	        		else
@@ -250,7 +250,7 @@ export default {
 
 	        			if( !this.orders )
 	        			{
-	        				this.$Notice.success({'desc' : '暂无数据'});
+	        				this.$Notice.success({title : '暂无数据'});
 	        				return ;
 	        			}
 
@@ -271,8 +271,9 @@ export default {
 	        		}
 	        	})
 	        	.catch(err=>{
+	        		console.log(err);
 	        		this.$Notice.error({
-	        			content:"获取订单列表失败"
+	        			title:"获取订单列表失败"
 	        		});
 	        	});
 	        	

@@ -1,9 +1,13 @@
 <template>
   <div id="app">
-    <Header/>
-    <navbar></navbar>
-    <router-view></router-view>
+    <template v-if="isLogin">
+      <Header />
+    </template>
+    <template v-if="isLogin">
+      <navbar></navbar>
+    </template>
 
+    <router-view></router-view>
 
   </div>
 </template>
@@ -11,12 +15,28 @@
 <script>
 import Header from './components/Header.vue'
 import navbar from './components/navbar.vue'
-
+import {mapState , mapMutations} from  'vuex'
 export default {
   name: 'app',
   components: {
     Header , navbar
+  },
+  computed:{
+    ...mapState([
+            'isLogin' //获取员工有权限的菜单
+        ]),
+
+  },
+  
+  created(){
+    //初始化登录状态，用于设置是否显示header和导航
+    this.initLoginStatus();
+  },
+
+  methods:{
+    ...mapMutations(['initLoginStatus'])
   }
+
 }
 </script>
 

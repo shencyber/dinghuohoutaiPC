@@ -146,13 +146,13 @@ var router =  new Router({
       ,meta:[ "ALL"]
     },
 
-    // {
-    //   path: '/logout',
-    //   name: 'logout',
-    //   component:  resolve => require(['../components/logout.vue'], resolve)//懒加载
-    //   //component: login
-    //   ,meta:[ "ALL" ]
-    // },
+    {
+      path: '/logout',
+      name: 'logout',
+      component:  resolve => require(['../components/logout.vue'], resolve)//懒加载
+      //component: login
+      ,meta:[ "ALL" ]
+    },
     // {
     //   path: '/index',
     //   name: 'index',
@@ -189,74 +189,30 @@ router.beforeEach((to , from , next)=>{
     // console.log("从哪来" , from);
     // console.log("到哪去" , to);
 
-    next();return ;
-    var role = VueCookie.get("role_admin")  ;
+    // console.log( VueCookie.get('token') );
+
+
+    // next();return ;
+    // var role = VueCookie.get("role_admin")  ;
 
     //如果用户未登录
-    if( !Boolean(VueCookie.get('token_admin') ) || !Boolean(VueCookie.get('uid_admin')) || !Boolean(VueCookie.get('role_admin'))  || !Boolean(VueCookie.get('username_admin')) || !Boolean(VueCookie.get('orgId_admin'))  )
-    // if(1)
+    if( !Boolean(VueCookie.get('token') )  )
     {
-
-      // next('/');
-
-
 
       if( to.path === "/"   )
       {
         next()
       }
-      else next("/")
+      else next("/orderlist")
 
     }
     else
     {
-      // console.log("已经  登录");
-      // console.log( "checkAuthority( role , to.meta )" , checkAuthority( role , to.meta ) );
 
-      if( to.name === 'login' ) next('/index');
+
+      if( to.name === 'login' ) next('/orderlist');
 
       else next();
-
-      return ;
-
-      if( checkAuthority( role , to.meta ) )
-              next() ;
-            else
-              next("/") ;
-
-
-      return ;
-
-
-        switch(to.name)
-        {
-
-          case 'login' :
-
-
-
-            next( '/index' )
-
-
-
-            break ;
-
-          case 'logout' :
-
-              next()
-              break;
-
-          case 'index' :
-
-            next()
-
-            break ;
-
-        
-        }
-
-      //next();
-
     }
 
 });
