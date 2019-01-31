@@ -147,6 +147,14 @@ var router =  new Router({
     },
 
     {
+      path: '/test',
+      name: 'test',
+      component:  resolve => require(['@/pages/test/test.vue'], resolve)//懒加载
+      //component: login
+      ,meta:[ "ALL"]
+    },
+
+    {
       path: '/logout',
       name: 'logout',
       component:  resolve => require(['../components/logout.vue'], resolve)//懒加载
@@ -192,7 +200,7 @@ router.beforeEach((to , from , next)=>{
     // console.log( VueCookie.get('token') );
 
 
-    // next();return ;
+    next();return ;
     // var role = VueCookie.get("role_admin")  ;
 
     //如果用户未登录

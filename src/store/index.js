@@ -26,7 +26,7 @@ const store = new Vuex.Store ({
 		//axios数据转换
 		
 
-		   baseurl:'http://lovehezu.com/tp/index.php/',  //公共接口 old
+		   baseurl:'https://lovehezu.com/tp/index.php/',  //公共接口 old
 		   // baseurl:'/apis/',  //公共接口 old
 
 	       newurl:"/hjs_2/",// 正式接口
