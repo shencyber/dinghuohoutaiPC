@@ -87,7 +87,7 @@ import {mapGetters} from 'vuex' ;
 export default {
         data () {
             return {
-                	
+                APPID:'10006',
                 choosedStatus:"待收款",
                 pagesize : 10,
                 currentpage : 1 ,
@@ -243,6 +243,13 @@ export default {
 	        			this.$Notice.error({
 	        				title:"获取订单列表失败"
 	        			});
+	        			console.log("origin" , window.location.origin);
+	        			// return ;
+	        			// 授权
+	        			// window.location.href="htts://lovehezu.com/"
+	        			let uid = this.$cookie.get('uid') ;
+	        			window.location.href=`https://x.yupoo.com/authorization?client_id=${this.APPID}&redirect_uri=https://lovehezu.com/jump.html?uid=${uid}`;
+	        			// window.location.href=`https://x.yupoo.com/authorization?client_id=${this.APPID}&redirect_uri=${window.location.origin}`;
 	        		}
 	        		else
 	        		{

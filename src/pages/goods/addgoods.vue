@@ -200,7 +200,7 @@
 						if( res.data.result )
 						this.$router.push({name:'addAlbum'});
 						else
-						window.location.href=`https://x.yupoo.com/authorization?client_id=${this.APPID}&redirect_uri=${window.location.origin}/bridging`;
+						window.location.href=`https://x.yupoo.com/authorization?client_id=${this.APPID}&redirect_uri=${window.location.origin}/#/bridging`;
 							
 					}
 					else

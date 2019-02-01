@@ -24,6 +24,15 @@ export default{
 	},
 
 	created(){
+		console.log( !this.$route.query , "query" )
+		return;
+
+		if( !this.$route.query.token || !this.$route.query.openId ) 
+		{
+			console.log("false");
+				this.$router.push({name:'login'});
+				return;
+		}
 		console.log( this.$route.query );
 		this.token = this.$route.query.token;
 		this.openId = this.$route.query.openId;

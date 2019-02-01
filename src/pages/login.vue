@@ -55,7 +55,7 @@ export default{
     },
 
     created(){
-
+    	console.log( this.$router.query );
 		// console.log( this.$log( this.$cookie.get('uid_admin') ) );
 
 	},
@@ -110,7 +110,7 @@ export default{
 					this.setLoginInfo( res.data.result );
 					this.$log( "user info" , res.data.result );
 
-                    this.$router.push( { name : "index" } )
+                    // this.$router.push( { name : "index" } )
               		this.$Message.info({
                				content:'登录成功'
               				 })

@@ -8,13 +8,13 @@ Vue.use(VueCookie)
 
 var router =  new Router({
 
-  mode:"history",
+  mode:"hash",
 
   routes: [
 
     
     {
-      path: '/',
+      path: '/login',
       name: 'login',
       component:  resolve => require(['../pages/login.vue'], resolve)//懒加载
       // component:  resolve => require(['../pages/goods/goodslist.vue'], resolve)//懒加载
@@ -131,7 +131,7 @@ var router =  new Router({
     },
 
     {
-      path: '/bridging',
+      path: '/',
       name: 'bridging',
       component:  resolve => require(['../pages/guodu/bridging.vue'], resolve)//懒加载
       //component: login
