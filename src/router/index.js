@@ -133,6 +133,7 @@ var router =  new Router({
     {
       path: '/',
       name: 'bridging',
+      redirect:'login',
       component:  resolve => require(['../pages/guodu/bridging.vue'], resolve)//懒加载
       //component: login
       ,meta:[ "ALL"]
@@ -200,7 +201,7 @@ router.beforeEach((to , from , next)=>{
     // console.log( VueCookie.get('token') );
 
 
-    next();return ;
+    // next();return ;
     // var role = VueCookie.get("role_admin")  ;
 
     //如果用户未登录
