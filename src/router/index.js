@@ -133,6 +133,7 @@ var router =  new Router({
     {
       path: '/',
       name: 'bridging',
+      redirect:'login',
       component:  resolve => require(['../pages/guodu/bridging.vue'], resolve)//懒加载
       //component: login
       ,meta:[ "ALL"]
