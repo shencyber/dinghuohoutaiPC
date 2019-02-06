@@ -140,7 +140,8 @@
 				else if( 1 == res.data.status )
 				{
 					//token已过期，跳转到又拍登录页面
-					window.location.href=`https://x.yupoo.com/authorization?client_id=${this.APPID}&redirect_uri=${window.location.origin}/#/bridging`;
+					// window.location.href=`https://x.yupoo.com/authorization?client_id=${this.APPID}&redirect_uri=${window.location.origin}/#/bridging`;
+					window.location.href=`https://x.yupoo.com/authorization?client_id=${this.APPID}&redirect_uri=${window.location.origin}/jump.html?uid=${uid}`;
 					// console.log( res );
 				}
 			} )

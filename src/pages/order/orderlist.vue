@@ -115,32 +115,6 @@ export default {
 
         methods:{
 
-        	getList(){
-        		this.$axios.get(
-        			this.getOrderListApi,
-
-        		{
-        			params:{
-	        			ghsid : this.$cookie.get('uid') , 
-	        			currentpage  : this.currentpage , 
-	        			pagesize  : this.pagesize ,
-	        			status   :  this.status 
-	        		}
-        		
-        		}
-	        	).then(res=>{
-	        			console.log( "list" , res );
-	        		if( 0 == res.data.status )
-	        		{
-
-		        		this.list = res.data.result ;
-		        		this.total = res.data.total ;
-	        		}
-	        	}).catch(err=>{
-	        		console.log( "err" , err );
-	        	});
-
-        	},
 
 	        initData(){
 	        	this.currentpage = 1;
@@ -248,7 +222,7 @@ export default {
 	        			// 授权
 	        			// window.location.href="htts://lovehezu.com/"
 	        			let uid = this.$cookie.get('uid') ;
-	        			window.location.href=`https://x.yupoo.com/authorization?client_id=${this.APPID}&redirect_uri=https://lovehezu.com/jump.html?uid=${uid}`;
+	        			window.location.href=`https://x.yupoo.com/authorization?client_id=${this.APPID}&redirect_uri=${window.location.origin}/jump.html?uid=${uid}`;
 	        			// window.location.href=`https://x.yupoo.com/authorization?client_id=${this.APPID}&redirect_uri=${window.location.origin}`;
 	        		}
 	        		else
