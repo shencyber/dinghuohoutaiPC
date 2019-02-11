@@ -208,6 +208,7 @@ const store = new Vuex.Store ({
 
 		//用户登录之后,调用该方法
 		setLoginInfo(state , object){
+			console.log( object );
 			let expires = { expires : 30 } ;//30天
 
 			VueCookie.set('uid',object.userid , expires);      //  用户id

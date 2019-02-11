@@ -199,7 +199,8 @@ router.beforeEach((to , from , next)=>{
     // console.log("到哪去" , to);
 
     // console.log( VueCookie.get('token') );
-
+    console.log( to );
+    console.log( VueCookie.get('token') );
 
     // next();return ;
     // var role = VueCookie.get("role_admin")  ;
@@ -208,11 +209,11 @@ router.beforeEach((to , from , next)=>{
     if( !Boolean(VueCookie.get('token') )  )
     {
 
-      if( to.path === "/"   )
+      if( to.path === "/login"   )
       {
         next()
       }
-      else next("/orderlist")
+      else next("/login")
 
     }
     else
