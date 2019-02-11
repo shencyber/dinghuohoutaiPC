@@ -76,12 +76,11 @@
 </template>
 
 <script type="text/javascript">
-	import {mapGetters} from 'vuex';
+	import {mapState , mapGetters} from 'vuex';
 
 	export default{
 		data(){
 			return {
-				APPID:'10006',
 				name:null, //名称
 				desc:null, //描述
 				unitprice:0, //单价
@@ -94,7 +93,7 @@
 		},
 	
 		computed:{
-
+			...mapState(['APPID']),
 		 	...mapGetters(['uploadGoodsImageApi' , 'publicGoodsApi' ,'isExpireTokenYPAPi']),
 		 	
 	    }
@@ -200,7 +199,12 @@
 						if( res.data.result )
 						this.$router.push({name:'addAlbum'});
 						else
-						window.location.href=`https://x.yupoo.com/authorization?client_id=${this.APPID}&redirect_uri=${window.location.origin}/#/bridging`;
+						{
+							let uid = this.$cookie.get('uid') ;
+						window.location.href=`https://x.yupoo.com/authorization?client_id=${this.APPID}&redirect_uri=https://lovehezu.com/jump.html?uid=${uid}`;
+						
+						}
+						// window.location.href=`https://x.yupoo.com/authorization?client_id=${this.APPID}&redirect_uri=${window.location.origin}/#/bridging`;
 							
 					}
 					else
