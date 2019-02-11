@@ -130,14 +130,14 @@ var router =  new Router({
       ,meta:[ "ALL"]
     },
 
-    {
-      path: '/',
-      name: 'bridging',
-      redirect:'login',
-      component:  resolve => require(['../pages/guodu/bridging.vue'], resolve)//懒加载
-      //component: login
-      ,meta:[ "ALL"]
-    },
+    // {
+    //   path: '/',
+    //   name: 'bridging',
+    //   redirect:'login',
+    //   component:  resolve => require(['../pages/guodu/bridging.vue'], resolve)//懒加载
+    //   //component: login
+    //   ,meta:[ "ALL"]
+    // },
 
     {
       path: '/me',
