@@ -25,7 +25,7 @@
 	    		<Col span="6">下单时间:{{detail.createtime}}</Col>
 	    		<Col span="6">订单状态:{{detail.statusText}}</Col>
 	    	</Row>
-	    	<Button @click="cancelOrder">取消订单</Button>
+	    	<Button v-show="detail.status!=4" @click="cancelOrder">取消订单</Button>
 	    </Card>
 
 
@@ -36,7 +36,7 @@
 	    		<Col span="6">付款状态:{{detail.shoukuanStatus?"已收款":"待收款"}}</Col>
 	    	</Row>
 	    	<Row>
-	    		<Col v-if="detail.shoukuanStatus==true" span=6>实收金额:{{detail.actualprice}}<Button @click="edit(1)">修改</Button></Col>
+	    		<Col v-if="detail.shoukuanStatus==true || detail.status!=4" span=6>实收金额:{{detail.actualprice}}<Button @click="edit(1)">修改</Button></Col>
 	    		<Col v-else span=12>实收金额:<input v-model="detail.actualprice"  /><Button @click="shoukuan"  type="primary">保存</Button></Col>
 	    	</Row>
 	    </Card>
@@ -44,7 +44,7 @@
 	    <Card class="card">
 	    	<p slot="title">快递信息</p>
 	    	<Row>
-	    		<Col v-if="detail.expressStatus" span=6>快递单号:{{detail.expressno}}<Button @click="edit(2)">修改</Button></Col>
+	    		<Col v-if="detail.expressStatus  || detail.status!=4" span=6>快递单号:{{detail.expressno}}<Button @click="edit(2)">修改</Button></Col>
 	    		<Col v-else span=6>快递单号:<input v-model="detail.expressno" /><Button @click="fahuo"  type="primary">保存</Button></Col>
 	    	</Row>	
 	    </Card>
@@ -144,11 +144,11 @@
 					if( 0 == res.data.status )
 					{
 						if( 1 == _res.status ) 
-        					res.statusText = "待收款"
+        					_res.statusText = "待收款"
         				else if( 2 == _res.status )
-        					res.statusText = "待发货"
+        					_res.statusText = "待发货"
         				else if( 3 == _res.status ) 
-        					res.statusText = "已收款"
+        					_res.statusText = "已发货"
         				else if( 4 == _res.status )
         					_res.statusText = "已取消"
 
@@ -182,6 +182,8 @@
 				.then(res=>{
 					if( 0 == res.data.status )
 					{
+						this.detail.status = 2 ;
+						this.detail.statusText = "待发货"
 						this.detail.shoukuanStatus = true ;
 
 						this.$Notice.success({desc:"保存成功"});
@@ -217,6 +219,8 @@
 				.then(res=>{
 					if( 0 == res.data.status )
 					{
+						this.detail.status = 3 ;
+						this.detail.statusText = "已发货"
 						this.detail.expressStatus = true ;
 						this.$Notice.success({desc:"保存成功"});
 					}
@@ -241,6 +245,7 @@
 				.then(res=>{
 					if( 0 == res.data.status )
 					{
+						this.detail.status = 4 ;
 						this.detail.statusText = '已取消' ;
 						this.$Notice.success({desc:"订单已取消"});
 					}
