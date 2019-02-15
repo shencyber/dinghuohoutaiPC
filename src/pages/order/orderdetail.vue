@@ -25,6 +25,7 @@
 	    		<Col span="6">下单时间:{{detail.createtime}}</Col>
 	    		<Col span="6">订单状态:{{detail.statusText}}</Col>
 	    	</Row>
+	    	<Button @click="cancelOrder">取消订单</Button>
 	    </Card>
 
 
@@ -120,6 +121,7 @@
                 'orderDetailApi'  //订单详情
                 ,'shouKuanApi'    //收款
                 ,'faHuoApi'      //发货
+                ,'cancelApi'     //取消
             ])
         },
 
@@ -226,6 +228,30 @@
 				.catch(err=>{
 					console.log(err);
 					this.$Notice.error({desc:"保存失败"});
+				});
+			}
+
+			,cancelOrder(){
+				this.$axios.post(
+					this.cancelApi,
+					{
+						orderid:this.$route.query.orderid,
+					}
+				)
+				.then(res=>{
+					if( 0 == res.data.status )
+					{
+						this.detail.statusText = '已取消' ;
+						this.$Notice.success({desc:"订单已取消"});
+					}
+					else
+					{
+						this.$Notice.error({desc:"订单取消失败"});
+					}
+				})
+				.catch(err=>{
+					console.log(err);
+					this.$Notice.error({desc:"订单取消失败"});
 				});
 			}
 

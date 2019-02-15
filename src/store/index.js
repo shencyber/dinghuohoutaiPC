@@ -125,6 +125,10 @@ const store = new Vuex.Store ({
 
 		// 发货
 		faHuoApi( state ){return state.baseurl + 'index/orders/fahuo'},
+
+		// 取消
+		cancelApi( state ){return state.baseurl + 'index/orders/quxiao'},
+
 	},
 	// 修改state中的数据
 	mutations:{
