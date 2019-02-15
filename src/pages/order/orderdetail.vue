@@ -36,7 +36,7 @@
 	    		<Col span="6">付款状态:{{detail.shoukuanStatus?"已收款":"待收款"}}</Col>
 	    	</Row>
 	    	<Row>
-	    		<Col v-if="detail.shoukuanStatus==true || detail.status!=4" span=6>实收金额:{{detail.actualprice}}<Button @click="edit(1)">修改</Button></Col>
+	    		<Col v-if="detail.shoukuanStatus==true" span=6>实收金额:{{detail.actualprice}}<Button @click="edit(1)">修改</Button></Col>
 	    		<Col v-else span=12>实收金额:<input v-model="detail.actualprice"  /><Button @click="shoukuan"  type="primary">保存</Button></Col>
 	    	</Row>
 	    </Card>
@@ -44,7 +44,7 @@
 	    <Card class="card">
 	    	<p slot="title">快递信息</p>
 	    	<Row>
-	    		<Col v-if="detail.expressStatus  || detail.status!=4" span=6>快递单号:{{detail.expressno}}<Button @click="edit(2)">修改</Button></Col>
+	    		<Col v-if="detail.expressStatus" span=6>快递单号:{{detail.expressno}}<Button @click="edit(2)">修改</Button></Col>
 	    		<Col v-else span=6>快递单号:<input v-model="detail.expressno" /><Button @click="fahuo"  type="primary">保存</Button></Col>
 	    	</Row>	
 	    </Card>
