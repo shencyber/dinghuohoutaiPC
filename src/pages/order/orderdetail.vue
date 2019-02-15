@@ -53,22 +53,22 @@
 	    	<Row>
 	    		<Col span=6>微信昵称:{{detail.dlsnickname}}{{detail.dlsavatar}}</Col>
 	    	</Row>
-	    	<Row>
+	    	<!-- <Row>
 	    		<Col>
 	    			收件地址:{{detail.address}}
 	    		</Col>
-	    	</Row>	
+	    	</Row>	 -->
 	    </Card>
 
 	    <Card class="card">
 	    	<p slot="title">收件人信息</p>
-	    	<Row>
+	    	<!-- <Row>
 	    		<Col span=6>收件人姓名:{{detail.receivername}}</Col>
 	    		<Col span=6>手机号:{{detail.receiverphone}}</Col>
-	    	</Row>
+	    	</Row> -->
 	    	<Row>
 	    		<Col>
-	    			收件地址:{{detail.address}}
+	    			{{detail.address}}
 	    		</Col>
 	    	</Row>	
 	    </Card>
