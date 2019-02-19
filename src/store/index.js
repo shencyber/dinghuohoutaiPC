@@ -26,10 +26,10 @@ const store = new Vuex.Store ({
 		//axios数据转换
 		
 
-		   baseurl:'https://lovehezu.com/tp/index.php/',  //公共接口 old
-		   // baseurl:'/apis/',  //公共接口 old
+		   baseurl:'https://lovehezu.com/tp/index.php/',  
+		   // baseurl:'/apis/',  
 
-	       newurl:"/hjs_2/",// 正式接口
+	       // newurl:"/hjs_2/",// 正式接口
 	       // newurl:"http://47.100.54.97:8080/hjs_2/",// 测试接口
 
 
@@ -112,6 +112,14 @@ const store = new Vuex.Store ({
 		//重置密码
 		// resetPasswordApi( state ){ return state.baseurl + 'resetPassword' },
 		
+
+
+		/****分类相关 begin****/ 
+		getCateListApi(state ){ return state.baseurl + 'index/category/getCateList' },  //获取分类列表
+		addCateApi(state){return state.baseurl + 'index/category/addCategory'},  //添加分类
+		editCategoryApi(state){return state.baseurl + 'index/category/editCategory'}, //修改分类名称
+		/****分类相关 end****/ 
+
 		/**订单相关**/
 
 		//供货商订单列表

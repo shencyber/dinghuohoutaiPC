@@ -21,6 +21,7 @@
                     <MenuItem name="2-1"><router-link :to="{name:'addgoods'}">本地上架</router-link></MenuItem>
                     <MenuItem name="2-2"><router-link :to="{name:'catelist'}">又拍上架</router-link></MenuItem>
                     <MenuItem name="2-3"><router-link :to="{name:'goodslist'}">商品列表</router-link></MenuItem>
+                    <MenuItem name="2-4"><router-link :to="{name:'cate'}">分类管理</router-link></MenuItem>
                 </Submenu>
                 
             </Menu>

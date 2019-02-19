@@ -140,6 +140,14 @@ var router =  new Router({
     // },
 
     {
+      path: '/cate',
+      name: 'cate',
+      component:  resolve => require(['../pages/cate/cate.vue'], resolve)//懒加载
+      //component: login
+      ,meta:[ "ALL"]
+    },
+
+    {
       path: '/me',
       name: 'me',
       component:  resolve => require(['../pages/me/me.vue'], resolve)//懒加载

@@ -13,7 +13,7 @@ module.exports = {
     proxyTable: {
         '/apis':{
 
-            target:'http://lovehezu.com/tp/index.php',
+            target:'https://lovehezu.com/tp/index.php/',
             changeOrigin:true,
             pathRewrite:{
                 '/apis':""
