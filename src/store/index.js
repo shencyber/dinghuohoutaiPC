@@ -118,6 +118,8 @@ const store = new Vuex.Store ({
 		getCateListApi(state ){ return state.baseurl + 'index/category/getCateList' },  //获取分类列表
 		addCateApi(state){return state.baseurl + 'index/category/addCategory'},  //添加分类
 		editCategoryApi(state){return state.baseurl + 'index/category/editCategory'}, //修改分类名称
+		deleteCateByIdApi(state){ return state.baseurl + 'index/category/deleteCateById' },//删除分类
+
 		/****分类相关 end****/ 
 
 		/**订单相关**/

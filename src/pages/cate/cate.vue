@@ -30,7 +30,7 @@
 			<td>
 				<Button v-if="item.editStatus" @click="save(index)" type="info">保存</Button>
 				<Button v-else @click="edit(index)" type="info">修改</Button>
-				<Button type='warning'>删除</Button>
+				<Button @click="deleteCate(index)" type='warning'>删除</Button>
 			</td>
 		</tr>
 
@@ -58,6 +58,7 @@ export default{
 			'getCateListApi' , //获取分类列表
 			'addCateApi'   ,      //添加分类
 			'editCategoryApi' , //修改分类
+			'deleteCateByIdApi' , //删除分类
 		])
 
 
@@ -109,6 +110,7 @@ export default{
 			
 		},
 
+
 		cancel(){
 			this.newCate.id = "";
 			this.newCate.cate = "";
@@ -134,6 +136,7 @@ export default{
 			.catch(err=>{console.log(err)})
 		},
 
+		//修改分类
 		edit( index )
 		{
 
@@ -142,7 +145,7 @@ export default{
 			this.$set( this.list , index , obj );
 		},
 
-
+		//保存分类
 		save( index ){
 			this.$axios.post(
 				this.editCategoryApi,
@@ -167,6 +170,59 @@ export default{
 				this.$log( "err" , err );
 					this.$Notice.error( {desc:"修改失败"} );
 			})
+		},
+
+		/*删除分类*/
+		deleteCate( index ){
+
+			// console.log("id" , this.list[index]);return;
+			let _id = this.list[index]['id'];
+			this.$Modal.confirm({
+				title : "操作确认",
+				content:`确认删除分类${this.list[index]['cate']}`,
+				onOk(){
+					console.log("ok" );
+					// console.log( "id" ,  _id);return;
+					// return ;
+					this.$axios.post(
+						this.deleteCateByIdApi,
+						{ cateId  : _id }
+					)
+					.then(res=>{
+						
+						if( 0 ==res.data.status )
+						{
+							this.$Notice.success({"desc":"删除成功"});
+							this.list.splice( index , 1 );
+						}
+						else if( -1 == res.data.status )
+						{
+							this.$Notice.error({"desc":"删除失败"});
+						}
+						else if( 1 == res.data.status )
+						{
+							this.$Notice.error({"desc":"分类不存在"});
+						}
+						else if( 2 == res.data.status )
+						{
+							this.$Notice.error({"desc":"该分类下有商品,无法删除分类"});
+						}
+					
+					})
+					.catch(err=>{
+						console.log( "err" , err );
+						this.$Notice.error({"desc":"删除失败"});
+					})
+
+				},
+				onCancel(){
+
+				}
+			});
+
+			return ;
+
+			
 		}	
 
 		// ...mapMutatiosn([]),
