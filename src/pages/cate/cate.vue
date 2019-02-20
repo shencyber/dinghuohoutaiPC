@@ -177,14 +177,11 @@ export default{
 
 			// console.log("id" , this.list[index]);return;
 			let _id = this.list[index]['id'];
-			this.$Modal.confirm({
-				title : "操作确认",
-				content:`确认删除分类${this.list[index]['cate']}`,
-				onOk(){
-					console.log("ok" );
-					// console.log( "id" ,  _id);return;
-					// return ;
-					this.$axios.post(
+
+			//删除分类的异步请求
+			let _delete = ()=>{
+
+				this.$axios.post(
 						this.deleteCateByIdApi,
 						{ cateId  : _id }
 					)
@@ -213,6 +210,17 @@ export default{
 						console.log( "err" , err );
 						this.$Notice.error({"desc":"删除失败"});
 					})
+
+			}
+
+			this.$Modal.confirm({
+				title : "操作确认",
+				content:`确认删除分类${this.list[index]['cate']}`,
+				onOk(){
+					console.log("ok" );
+					// console.log( "id" ,  _id);return;
+					// return ;
+					_delete();
 
 				},
 				onCancel(){
