@@ -21,6 +21,16 @@
         </Row>
 
         <Row class="row">
+            <Col span=2>商品分类</Col>
+            <Col>
+                <Select v-model="detail.cate" style="width:200px">
+                    <Option v-for="item in cateList" :value="item.cate" :key="item.id">{{ item.cate }}</Option>
+                </Select>   
+            </Col>
+
+        </Row>
+
+        <Row class="row">
             <Col span=2>{{upOrDownTxt}}</Col>
             <Col span=18>{{time}}</Col>
         </Row>
@@ -95,18 +105,20 @@
         <img :src="yulan" style="width: 100%">
     </Modal>
 
-    <!-- <foot></foot> -->
 </div>
 </template>
     <script>
-        // import navbar from '@/components/navbar'
-        // import secondnavbar from '@/components/secondnavbar'
-        // import foot from '@/components/foot'
+       
         import {mapGetters } from 'vuex'
         export default {
-            // components:{navbar,secondnavbar,foot},
             data () {
                 return {
+                    
+                    cateList:"",//所有分类
+                    // choosedCate:"" , //选中的分类
+
+
+
                     goodsid:null , 
                     detail:{
                     	id:'', //商品id
@@ -118,7 +130,9 @@
                         unitprice:0,
                         unit:'',
                         urls:'',
-                        source:''
+                        source:'',
+                        cate:"" , //分类名称
+                        cateId:"" , //分类id
                     },
 
                     visible:false,
@@ -131,7 +145,8 @@
                 ...mapGetters([
                 	'getGoodsByIdApi' , 
                 	'updateGoodsApi',
-                	'uploadGoodsImageApi'
+                	'uploadGoodsImageApi',
+                    'getCateListApi', //获取该客户的商品分类
                 	]),
 
                 statusTxt(){
@@ -155,13 +170,45 @@
             created(){
                 	this.goodsid = this.$route.query.id;
                 	this.getGoods();
+
+                    this.getCateList();
+
             	},
 
 
             methods:{
 
+
+                //获取高用户创建的商品分类
+                getCateList(){
+                    this.$axios.get(
+                        this.getCateListApi,
+                        {params:{ghsid:this.$cookie.get('uid')}}
+                    )
+                    .then(res=>{
+
+                        if( 0 == res.data.status )
+                        {
+                            res.data.result.splice( 0 , 0 , {id:0,cate:"未分类"});
+                            this.cateList = res.data.result ;
+                            console.log( this.cate );
+                            this.choosedCate = this.cateList[0]['cate'] ;
+                        }
+                        else
+                        {
+                            this.$Notice.error({desc:"获取分类失败,请刷新页面"});
+                        }
+
+                    })
+                    .catch(err=>{
+                            this.$Notice.error({desc:"获取分类失败,请刷新页面"});
+                            console.log( err );
+                    })
+                }
+
+
                 //获取商品数据
-                getGoods(){
+                ,getGoods(){
 
                 	this.$axios.post(
                 		this.getGoodsByIdApi,
@@ -196,13 +243,24 @@
                 //商品更新
                 ,updateGoods( goodsid )
                 {
+
+                    for( let i in this.cateList )
+                    {
+                        if( this.cateList[i]['cate'] == this.detail.cate )
+                        {
+                            this.detail.cateId = this.cateList[i]['id'] ;
+                        }
+                    }
+
+                    
                     let postData = {
                         goodsid:goodsid,
                         name:this.detail.name,
                         desc:this.detail.desc,
                         unitprice:this.detail.unitprice,
                         unit:this.detail.unit,
-                        shorturls:this.uploadShortList
+                        shorturls:this.uploadShortList,
+                        cateId:this.detail.cateId
                     };
 
                     

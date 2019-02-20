@@ -26,8 +26,8 @@ const store = new Vuex.Store ({
 		//axios数据转换
 		
 
-		   baseurl:'https://lovehezu.com/tp/index.php/',  
-		   // baseurl:'/apis/',  
+		   // baseurl:'https://lovehezu.com/tp/index.php/',  
+		   baseurl:'/apis/',  
 
 	       // newurl:"/hjs_2/",// 正式接口
 	       // newurl:"http://47.100.54.97:8080/hjs_2/",// 测试接口
