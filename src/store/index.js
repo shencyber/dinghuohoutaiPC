@@ -59,6 +59,8 @@ const store = new Vuex.Store ({
 		getGoodsListByGhsIdApi(state){return state.baseurl + 'index/goods/getgoodslistbyghsid'},
 		// getGoodsListByGhsIdApi(state){return state.baseurl + 'index/goods/getGoodsListByGhsId'},
 		
+		//根据商品分类获取商品列表
+		getGoodsListByCateIdApi(state){return state.baseurl+'index/goods/getGoodsListByCateId'},
 		// 上传图片
 		uploadGoodsImageApi( state ){ return state.baseurl + 'index/photo/upload' },
 
@@ -78,6 +80,8 @@ const store = new Vuex.Store ({
 		// 商品上架
 		goodsShangJiaApi(state){return state.baseurl + 'index/goods/shangjia'},
 
+		//根据供货商id获取商品总数量
+		goodsCountApi(state){return state.baseurl + 'index/goods/getTotal'},
 
 		/***供货商相关***/
 		//判断token是否过期 
@@ -119,6 +123,8 @@ const store = new Vuex.Store ({
 		addCateApi(state){return state.baseurl + 'index/category/addCategory'},  //添加分类
 		editCategoryApi(state){return state.baseurl + 'index/category/editCategory'}, //修改分类名称
 		deleteCateByIdApi(state){ return state.baseurl + 'index/category/deleteCateById' },//删除分类
+		getCateListAndCountApi(state){return state.baseurl+'index/category/getCateListWithGoodsCount'}, //获取所有分类及其下面的相册数据
+
 
 		/****分类相关 end****/ 
 

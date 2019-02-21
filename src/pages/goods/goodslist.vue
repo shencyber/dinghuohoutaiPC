@@ -2,20 +2,30 @@
 <template>
 <div class="outter-container">
     
-    <!--面包屑导航 start -->
-    <div class="bread" >
-        <Breadcrumb style="padding-left:10px;">
-            <!-- <Breadcrumb-item href="/">首页</Breadcrumb-item> -->
-            <!-- <Breadcrumb-item href="">交易中心</Breadcrumb-item> -->
-            <!-- <Breadcrumb-item href="">货盘管理</Breadcrumb-item> -->
-            <!-- <Breadcrumb-item >货盘列表</Breadcrumb-item> -->
-        </Breadcrumb>
-    </div>
-    <!--面包屑导航 end -->
+    
 
 
     <div class="single-page-con">
         
+
+        <!--面包屑导航 start -->
+        <div class="bread" >
+            <Breadcrumb style="padding-left:10px;">
+                <Breadcrumb-item href="">商品管理</Breadcrumb-item>
+                <Breadcrumb-item href="">商品列表</Breadcrumb-item>
+                <!-- <Breadcrumb-item href="">货盘管理</Breadcrumb-item> -->
+                <!-- <Breadcrumb-item >货盘列表</Breadcrumb-item> -->
+            </Breadcrumb>
+        </div>
+        <!--面包屑导航 end -->
+
+
+        <div class="tag">
+            <!-- <Button style="margin:0 4px;" size="small">所有({{goodsCount}})</Button> -->
+            <Button  v-bind:class="{active:item.active}" style="margin:0 4px;" size="small" @click="btFn(index)" v-for="(item,index) in tags" color="cyan">{{item.cate}}({{item.count}})</Button>
+
+        </div>
+
             <div style="margin-bottom: 10px;">
                 <span class="left-btn">
                     
@@ -66,26 +76,62 @@
         import axios from 'axios'
         export default {
             name:"goodslist",
-            // components:{navbar,secondnavbar,foot},
+
             data () {
                 return {
+
+                    goodsCount:0, //所有分类下的商品总数量
+                    currentCate:-1 ,   //-1 所有分类  0、1、2 自定义的分类的id
+
+                    tags:'' , //分类标签
+
                     currentpage:1,
                     pagesize:10,
                     total:0,
                     userId:'', //用户id
-                    typeNum:1,// 
+                    typeNum:1,//  1-已上架 2-已下架 
                     goodsList:[],
                     flag:1,
                 }
             },
             computed:{
-                ...mapGetters(['getGoodsListByGhsIdApi'])
+                ...mapGetters([
+                    'getGoodsListByGhsIdApi' ,
+                    'getCateListAndCountApi', //获取分类
+                    'getGoodsListByCateIdApi',  //根据商品分类获取商品列表
+                    'goodsCountApi',            //获取商品总数量
+                ])
             },
-            methods:{
-                // ...mapActions(['getGoodsListByGhsIdApi']),
-              
+
+            created(){
+                this.currentpage =1;
+                this.changepage(this.currentpage);
+                this.getTags();
                 
-                //  类型切换
+            },
+
+
+            methods:{
+                   
+                //获取【所有】分类下的商品数量 
+                initGoodsCount(){
+                    this.$axios.get(this.goodsCountApi,{params:{ghsid:this.$cookie.get('uid')}})
+                    .then(res=>{ 
+                        if( 0 == res.data.status)
+                        {
+
+                            console.log( "tags" , this.tags );
+                            console.log( res.data.result );
+                            this.tags[0]['count'] = res.data.result ; 
+                        }
+                    })
+                    .catch(err=>{
+                        console.log( err );
+                    });
+                },
+
+                
+                //  已上架 已下架 类型切换
                 selTabFun(typeNum){
 
                 	// return ;
@@ -101,7 +147,100 @@
                     this.currentpage = 1;
                 },
 
+                //获取所有分类
+                getTags(){
+                    this.$axios.get(
+                        this.getCateListAndCountApi,
+                        { params:{ghsid:this.$cookie.get('uid')} }
+                    )
+                    .then(res=>{
+                        
+                        if( 0 ==res.data.status )
+                        {
 
+                            this.tags = res.data.result ;
+                            for( let i in this.tags )
+                            {
+                                this.tags[i]['active'] = false ;
+                            }
+                            this.tags.unshift({id:-1,cate:"所有",count:0,active:true});
+                            console.log( this.tags );
+
+                            //获取所有分类下的数量
+                            this.initGoodsCount();
+
+                        }
+                        else
+                        {
+                            this.$Notice.error({"desc":"获取分类失败"});
+                        }
+                    
+                    })
+                    .catch(err=>{
+                        this.$log( "err" , err );
+                            this.$Notice.error({"desc":"获取分类失败"});
+                    })
+                },
+
+                //分类切换
+                btFn(index){
+
+                    // this.goodsList=[];
+                    // this.currentpage = current; 
+                    this.pageClear();
+                    this.typeNum = 1 ;
+
+                    this.currentCate = this.tags[index]['id'] ;
+                    
+                    for( let i in this.tags )
+                    {
+                        let _old = this.tags[i] ;
+                        _old['active'] = (i==index)?true:false ;
+                        this.$set( this.tags , i,  _old );
+                    }
+
+                    if( this.tags[index]['id'] >= 0 )
+                        this.getgoodsByCateId( this.$cookie.get('uid'),this.tags[index]['id'] , this.currentpage , this.pagesize , 1 );
+                    else
+                        this.getGoods( this.typeNum );
+                },
+
+                //根据商品分类获取商品列表
+                getgoodsByCateId( ghsid , cateid , currentpage , pagesize , type ){
+
+                    console.log( cateid , currentpage , pagesize , type);
+                     this.$axios.get(
+                        this.getGoodsListByCateIdApi,
+                        { params:{ghsid:ghsid , cateId:cateid,currentpage:currentpage,pagesize:pagesize,type:type} }
+                    )
+                    .then(res=>{
+                        console.log( "res" , res );
+                        if( 0 ==res.data.status )
+                        {
+                            this.goodsList = res.data.result
+                            console.log( "this.goodsList" , this.goodsList );
+                            this.total = res.data.total
+                            if(res.data.total == 0 )
+                            // if(res.data.result.length == 0 )
+                            {
+                                this.$Message.warning({
+                                    content:'此分类下没有商品'
+                                })
+                            }
+                        }
+                        else
+                        {
+                            this.$Notice.error({"desc":"此分类下没有商品"});
+                        }
+                    
+                    })
+                    .catch(err=>{
+                        this.$log( "err" , err );
+                    })
+
+                },
+
+                //根据供货商id获取商品列表
                 getGoods(num){
                     let postData = {
                         type:this.typeNum,   //列表类型：1-已上架 2-已下架 
@@ -148,17 +287,20 @@
                     	console.log( "get goods" , err );
                     });
                 },
+
+                // 分页
                 changepage(current){
                     this.goodsList=[];
                     this.currentpage = current; 
-                    this.getGoods(this.typeNum);
+
+                    if( -1 == this.currentCate )
+                        this.getGoods(this.typeNum);
+                    else
+                        this.getgoodsByCateId( this.$cookie.get('uid'), this.currentCate , this.currentpage , this.pagesize , this.typeNum );
                    
                 }
             },
-            created(){
-                this.currentpage =1;
-                this.changepage(this.currentpage);
-            },
+
         }
     </script>
     <style scoped>
@@ -168,6 +310,21 @@
         margin-bottom:20px;
         /*border:1px solid red;*/
     }
+        
+    .tag{padding:10px 0;}
+
+    .active{
+        color:#13c2c2;
+        border: 1px solid #e8eaec;
+        background: #e6fffb;
+
+    }
+    .notactive{   
+        color:#515a6e; 
+        border: 1px solid #e8eaec;
+        background: #f7f7f7;
+    }
+
         .w1200{
             width:100%;
             padding-bottom: 50px;
