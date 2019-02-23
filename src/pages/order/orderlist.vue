@@ -82,12 +82,12 @@
 
 <script>
 	
-import {mapGetters} from 'vuex' ;
+import {mapState , mapGetters} from 'vuex' ;
 
 export default {
         data () {
             return {
-                APPID:'10006',
+              
                 choosedStatus:"待收款",
                 pagesize : 10,
                 currentpage : 1 ,
@@ -100,6 +100,9 @@ export default {
         },
 
         computed: {
+        	...mapState([
+        		'APPID'  //又拍的账号
+        	]),
             ...mapGetters([
 
                 'orderListApi'  //订单列表

@@ -15,6 +15,12 @@
 
 
     <div class="single-page-con">
+
+        <Row class="row">
+            <Col span=2>分类</Col>
+            <Col span=18>{{detail.cate}}</Col>
+        </Row>
+
         <Row class="row">
             <Col span=2>状态</Col>
             <Col span=18>{{statusTxt}}</Col>
@@ -90,7 +96,8 @@
                         name:'',
                         desc:'',
                         unitprice:0,
-                        urls:''
+                        urls:'',
+                        cate:''
                     },
 
                     visible:false,

@@ -11,6 +11,12 @@
 		<!-- <Button type="warning" @click="gotoAddAlbum()">+添加相册商品</Button> -->
 		<Form :label-width="80">
 		
+			<FormItem label="商品分类">
+				<Select v-model="choosedCate" style="width:200px">
+				    <Option v-for="item in cateList" :value="item.cate" :key="item.id">{{ item.cate }}</Option>
+			    </Select>	        
+			</FormItem>	
+
 			<FormItem label="名称">
 	            <Input style="max-width:700px;" v-model="name" placeholder="输入商品名称..."></Input>
 	        </FormItem>
@@ -25,7 +31,7 @@
 	        </FormItem>
 
 	        
-	        <FormItem style='border:1px solid green;' label="图片"> 
+	        <FormItem  label="图片"> 
 	        	<div style="display: inline-block;margin-top:10px;" class="demo-upload-list"  v-for="item in uploadList">
 		        <!-- <template v-if="item.status === 'finished'"> -->
 		            <img :src="item.longUrl">
@@ -49,7 +55,7 @@
 			        multiple
 			        :on-success	="handleSuccess"
 			        :on-error="handleError"
-			        style="position:relative;border:1px solid blue;display: inline-block;width:60px;height:60px;text-align: center;">
+			        style="position:relative;border:1px solid gray;display: inline-block;width:60px;height:60px;text-align: center;">
 			        <div style="width: 60px;height:60px;line-height: 60px;">
 			            <Icon type="ios-camera" size="20"></Icon>
 			        </div>
@@ -57,7 +63,7 @@
 	        </FormItem>
 
 	        <FormItem>
-	        	<Button type="primary" @click="public">发布</Button>
+	        	<Button type="primary" @click="public">上架</Button>
 	        </FormItem>
 
 		</Form>
@@ -76,12 +82,14 @@
 </template>
 
 <script type="text/javascript">
-	import {mapGetters} from 'vuex';
+	import {mapState , mapGetters} from 'vuex';
 
 	export default{
 		data(){
 			return {
-				APPID:'10006',
+
+				cateList:"",//分类
+				choosedCate:"" , //选中的分类
 				name:null, //名称
 				desc:null, //描述
 				unitprice:0, //单价
@@ -94,17 +102,49 @@
 		},
 	
 		computed:{
-
-		 	...mapGetters(['uploadGoodsImageApi' , 'publicGoodsApi' ,'isExpireTokenYPAPi']),
+			...mapState(['APPID']),
+		 	...mapGetters([
+		 		'uploadGoodsImageApi' , 'publicGoodsApi' ,'isExpireTokenYPAPi',
+		 		'getCateListApi', //获取该客户的商品分类
+		 		]),
 		 	
 	    }
 
 		,created(){
 
+			this.getCateList()	;
+
 		}
 
 		,methods:{
-			handleSuccess(response , file , filelist)
+			//获取高用户创建的商品分类
+			getCateList(){
+				this.$axios.get(
+					this.getCateListApi,
+					{params:{ghsid:this.$cookie.get('uid')}}
+				)
+				.then(res=>{
+
+					if( 0 == res.data.status )
+					{
+						res.data.result.splice( 0 , 0 , {id:0,cate:"未分类"});
+						this.cateList = res.data.result ;
+						console.log( this.cate );
+						this.choosedCate = this.cateList[0]['cate'] ;
+					}
+					else
+					{
+						this.$Notice.error({desc:"获取分类失败,请刷新页面"});
+					}
+
+				})
+				.catch(err=>{
+						this.$Notice.error({desc:"获取分类失败,请刷新页面"});
+						console.log( err );
+				})
+			}
+
+			,handleSuccess(response , file , filelist)
 			{
 				console.log( response );
 				if( 0 == response.status )
@@ -152,20 +192,35 @@
 
 			,public()
 			{
+				
+				// 根据下拉框的文案获取对应的分类id
+				
+
 				let data = {
 					ghsid : this.$cookie.get('uid') ,
 					name  : this.name ,
 					desc  : this.desc ,
 					unitprice : this.unitprice ,
 					unit : this.unit ,
-					shorturls : []
+					shorturls : [],
+					cateId:"" ,
 				};
+
+				for( let i in this.cateList )
+				{
+					if( this.cateList[i]['cate'] == this.choosedCate )
+					{
+						data.cateId = this.cateList[i]['id'] ;
+					}
+				}
+				// console.log( data );return ;
 
 				for( let i in this.uploadList )
 				{
 					console.log( this.uploadList[i] );
 					data.shorturls.push( this.uploadList[i]['shortUrl'] );
 				}
+
 
 				this.$axios.post(
 					this.publicGoodsApi ,
@@ -175,7 +230,7 @@
 					console.log( res );
 					if( 0 == res.data.status )
 					{
-						this.$Notice.success( {desc:"发布成功"} );
+						this.$Notice.success( {desc:"上架成功"} );
 						this.$router.replace({name:"goodslist"});
 					}
 				})
@@ -200,8 +255,13 @@
 						if( res.data.result )
 						this.$router.push({name:'addAlbum'});
 						else
+
+						{
+							let uid = this.$cookie.get('uid') ;
+						window.location.href=`https://x.yupoo.com/authorization?client_id=${this.APPID}&redirect_uri=https://lovehezu.com/jump.html?uid=${uid}`;
+						
+						}
 						// window.location.href=`https://x.yupoo.com/authorization?client_id=${this.APPID}&redirect_uri=${window.location.origin}/#/bridging`;
-						window.location.href=`https://x.yupoo.com/authorization?client_id=${this.APPID}&redirect_uri=${window.location.origin}/jump.html?uid=${uid}`;
 							
 					}
 					else

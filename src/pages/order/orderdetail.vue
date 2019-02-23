@@ -25,6 +25,7 @@
 	    		<Col span="6">下单时间:{{detail.createtime}}</Col>
 	    		<Col span="6">订单状态:{{detail.statusText}}</Col>
 	    	</Row>
+	    	<Button v-show="detail.status!=4" @click="cancelOrder">取消订单</Button>
 	    </Card>
 
 
@@ -53,22 +54,22 @@
 	    	<Row>
 	    		<Col span=6>微信昵称:{{detail.dlsnickname}}{{detail.dlsavatar}}</Col>
 	    	</Row>
-	    	<Row>
+	    	<!-- <Row>
 	    		<Col>
 	    			收件地址:{{detail.address}}
 	    		</Col>
-	    	</Row>	
+	    	</Row>	 -->
 	    </Card>
 
 	    <Card class="card">
 	    	<p slot="title">收件人信息</p>
-	    	<Row>
+	    	<!-- <Row>
 	    		<Col span=6>收件人姓名:{{detail.receivername}}</Col>
 	    		<Col span=6>手机号:{{detail.receiverphone}}</Col>
-	    	</Row>
+	    	</Row> -->
 	    	<Row>
 	    		<Col>
-	    			收件地址:{{detail.address}}
+	    			{{detail.address}}
 	    		</Col>
 	    	</Row>	
 	    </Card>
@@ -120,6 +121,7 @@
                 'orderDetailApi'  //订单详情
                 ,'shouKuanApi'    //收款
                 ,'faHuoApi'      //发货
+                ,'cancelApi'     //取消
             ])
         },
 
@@ -142,11 +144,11 @@
 					if( 0 == res.data.status )
 					{
 						if( 1 == _res.status ) 
-        					res.statusText = "待收款"
+        					_res.statusText = "待收款"
         				else if( 2 == _res.status )
-        					res.statusText = "待发货"
+        					_res.statusText = "待发货"
         				else if( 3 == _res.status ) 
-        					res.statusText = "已收款"
+        					_res.statusText = "已发货"
         				else if( 4 == _res.status )
         					_res.statusText = "已取消"
 
@@ -180,6 +182,8 @@
 				.then(res=>{
 					if( 0 == res.data.status )
 					{
+						this.detail.status = 2 ;
+						this.detail.statusText = "待发货"
 						this.detail.shoukuanStatus = true ;
 
 						this.$Notice.success({desc:"保存成功"});
@@ -215,6 +219,8 @@
 				.then(res=>{
 					if( 0 == res.data.status )
 					{
+						this.detail.status = 3 ;
+						this.detail.statusText = "已发货"
 						this.detail.expressStatus = true ;
 						this.$Notice.success({desc:"保存成功"});
 					}
@@ -226,6 +232,31 @@
 				.catch(err=>{
 					console.log(err);
 					this.$Notice.error({desc:"保存失败"});
+				});
+			}
+
+			,cancelOrder(){
+				this.$axios.post(
+					this.cancelApi,
+					{
+						orderid:this.$route.query.orderid,
+					}
+				)
+				.then(res=>{
+					if( 0 == res.data.status )
+					{
+						this.detail.status = 4 ;
+						this.detail.statusText = '已取消' ;
+						this.$Notice.success({desc:"订单已取消"});
+					}
+					else
+					{
+						this.$Notice.error({desc:"订单取消失败"});
+					}
+				})
+				.catch(err=>{
+					console.log(err);
+					this.$Notice.error({desc:"订单取消失败"});
 				});
 			}
 

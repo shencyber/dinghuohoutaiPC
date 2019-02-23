@@ -26,10 +26,10 @@ const store = new Vuex.Store ({
 		//axios数据转换
 		
 
-		   baseurl:'https://lovehezu.com/tp/index.php/',  //公共接口 old
-		   // baseurl:'/apis/',  //公共接口 old
+		   baseurl:'https://lovehezu.com/tp/index.php/',  
+		   // baseurl:'/apis/',  
 
-	       newurl:"/hjs_2/",// 正式接口
+	       // newurl:"/hjs_2/",// 正式接口
 	       // newurl:"http://47.100.54.97:8080/hjs_2/",// 测试接口
 
 
@@ -59,6 +59,8 @@ const store = new Vuex.Store ({
 		getGoodsListByGhsIdApi(state){return state.baseurl + 'index/goods/getgoodslistbyghsid'},
 		// getGoodsListByGhsIdApi(state){return state.baseurl + 'index/goods/getGoodsListByGhsId'},
 		
+		//根据商品分类获取商品列表
+		getGoodsListByCateIdApi(state){return state.baseurl+'index/goods/getGoodsListByCateId'},
 		// 上传图片
 		uploadGoodsImageApi( state ){ return state.baseurl + 'index/photo/upload' },
 
@@ -78,6 +80,8 @@ const store = new Vuex.Store ({
 		// 商品上架
 		goodsShangJiaApi(state){return state.baseurl + 'index/goods/shangjia'},
 
+		//根据供货商id获取商品总数量
+		goodsCountApi(state){return state.baseurl + 'index/goods/getTotal'},
 
 		/***供货商相关***/
 		//判断token是否过期 
@@ -112,6 +116,18 @@ const store = new Vuex.Store ({
 		//重置密码
 		// resetPasswordApi( state ){ return state.baseurl + 'resetPassword' },
 		
+
+
+		/****分类相关 begin****/ 
+		getCateListApi(state ){ return state.baseurl + 'index/category/getCateList' },  //获取分类列表
+		addCateApi(state){return state.baseurl + 'index/category/addCategory'},  //添加分类
+		editCategoryApi(state){return state.baseurl + 'index/category/editCategory'}, //修改分类名称
+		deleteCateByIdApi(state){ return state.baseurl + 'index/category/deleteCateById' },//删除分类
+		getCateListAndCountApi(state){return state.baseurl+'index/category/getCateListWithGoodsCount'}, //获取所有分类及其下面的相册数据
+
+
+		/****分类相关 end****/ 
+
 		/**订单相关**/
 
 		//供货商订单列表
@@ -125,6 +141,10 @@ const store = new Vuex.Store ({
 
 		// 发货
 		faHuoApi( state ){return state.baseurl + 'index/orders/fahuo'},
+
+		// 取消
+		cancelApi( state ){return state.baseurl + 'index/orders/quxiao'},
+
 	},
 	// 修改state中的数据
 	mutations:{
@@ -208,6 +228,7 @@ const store = new Vuex.Store ({
 
 		//用户登录之后,调用该方法
 		setLoginInfo(state , object){
+			console.log( object );
 			let expires = { expires : 30 } ;//30天
 
 			VueCookie.set('uid',object.userid , expires);      //  用户id
