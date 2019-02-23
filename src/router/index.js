@@ -201,7 +201,7 @@ router.beforeEach((to , from , next)=>{
     // console.log( VueCookie.get('token') );
 
 
-    // next();return ;
+    next();return ;
     // var role = VueCookie.get("role_admin")  ;
 
     //如果用户未登录
